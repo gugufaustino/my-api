@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>ApiApplication</RootNamespace>
+    <AssemblyName>ApiApplication</AssemblyName>
+    <UserSecretsId>b3a452a9-145c-419e-b3e0-be7ab66e11e1</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="microsoft.aspnetcore.identity.entityframeworkcore" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.5" />
+    <PackageReference Include="microsoft.entityframeworkcore" Version="5.0.5" />
+    <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="5.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="TourmalineCore.AspNetCore.JwtAuthentication.Core" Version="0.1.1" />
+  </ItemGroup>
+
+
+</Project>
