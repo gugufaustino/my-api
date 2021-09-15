@@ -8,8 +8,8 @@ namespace Business.Interface.Services
 {
    public interface IContaService  : IDisposable
     {
-        Task AdicionarPagamento(Pagamento pagamento);
-
+        Task AdicionarPagamentoUnico(Pagamento pagamento);
+        Task AdicionarPagamentoMensal(Pagamento entity, int diaVencimento);
         Task Excluir(int Id);
     }
 }

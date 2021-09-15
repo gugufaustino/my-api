@@ -9,6 +9,7 @@ namespace Business.Interface.Services
    public interface IPagamentoService : IDisposable
     {
         Task Adicionar(Pagamento pagamento);
+        Task Adicionar(List<Pagamento> lstGerarPagamentos);
         Task Editar(int Id, Pagamento pagamento);
         Task ExcluirPorConta(int id);
         Task Excluir(int id);

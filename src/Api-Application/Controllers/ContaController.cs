@@ -24,7 +24,7 @@ namespace ApiApplication.Controllers
 
         private readonly ILogger<ContaController> _logger;
         private readonly IMapper _mapper;
-         
+
         private readonly IContaService _service;
         private readonly IPagamentoRepository _repositoryPagamento;
 
@@ -36,7 +36,7 @@ namespace ApiApplication.Controllers
            : base(broadcaster)
         {
             _logger = logger;
-             
+
             _service = service;
             _mapper = mapper;
             _repositoryPagamento = repositoryPagamento;
@@ -44,20 +44,20 @@ namespace ApiApplication.Controllers
 
         [HttpGet]
         [ClaimsAuthorize(Permissao)]
-        public async Task<IEnumerable<ContaAPagarViewModel>> Listar()
+        public async Task<IEnumerable<PagamentoViewModel>> Listar()
         {
             var lista = await _repositoryPagamento.ListarTodos();
             lista = lista.OrderBy(i => i.DtVencimento).ToList();
-            return _mapper.Map<IEnumerable<ContaAPagarViewModel>>(lista);            
+            return _mapper.Map<IEnumerable<PagamentoViewModel>>(lista);
         }
 
         [HttpGet("{id:int}")]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<ContaAPagarViewModel>> ObterPorId(int id)
+        public async Task<ActionResult<PagamentoViewModel>> ObterPorId(int id)
         {
-            var pagamento = await _repositoryPagamento.ObterPorId(id) ;
-            
-            return _mapper.Map<ContaAPagarViewModel>(pagamento);
+            var pagamento = await _repositoryPagamento.ObterPorId(id);
+
+            return _mapper.Map<PagamentoViewModel>(pagamento);
         }
 
         [HttpDelete("{id:int}")]
@@ -71,12 +71,24 @@ namespace ApiApplication.Controllers
 
         [HttpPost]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<ContaAPagarViewModel>> Inserir(ContaAPagarViewModel pagamento)
+        public async Task<ActionResult<PagamentoViewModel>> Inserir(PagamentoViewModel pagamento)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var entity = _mapper.Map<Pagamento>(pagamento);
-            await _service.AdicionarPagamento(entity);
+            switch (entity.Conta.TipoRecorrencia)
+            {
+                case Business.Models.Enum.TipoRecorrenciaEnum.Unico:
+                    await _service.AdicionarPagamentoUnico(entity);
+                    break;
+                case Business.Models.Enum.TipoRecorrenciaEnum.Mensal:
+                    await _service.AdicionarPagamentoMensal(entity, pagamento.DiaVencimento.Value);
+                    break;
+                case Business.Models.Enum.TipoRecorrenciaEnum.Anual:
+                default:
+                    ToTransmit("Não implementado");
+                    break;
+            }
 
             return CustomResponse();
         }

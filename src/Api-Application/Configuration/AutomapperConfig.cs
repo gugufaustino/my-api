@@ -12,12 +12,12 @@ namespace ApiApplication.Configuration
 
             // DE -> PARA
             // Conta -> Model
-            CreateMap<Conta, ContaAPagarViewModel>()
+            CreateMap<Conta, PagamentoViewModel>()
                 .ForMember(prop => prop.TipoRecorrenciaDescricao, opt => opt.MapFrom(src => src.TipoRecorrencia.ToString()))
                 .ReverseMap();
 
             // Pagamento -> Model
-            CreateMap<Pagamento, ContaAPagarViewModel>()
+            CreateMap<Pagamento, PagamentoViewModel>()
                 .ForPath(dest => dest.TipoRecorrenciaDescricao, opt => opt.MapFrom(src => src.Conta.TipoRecorrencia))
                 .ForPath(dest => dest.TipoRecorrencia, opt => opt.MapFrom(src => src.Conta.TipoRecorrencia))
                 .ForPath(dest => dest.DescricaoFornecedor, opt => opt.MapFrom(src => src.Conta.DescricaoFornecedor))

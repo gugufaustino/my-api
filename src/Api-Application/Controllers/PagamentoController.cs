@@ -45,25 +45,25 @@ namespace ApiApplication.Controllers
 
         [HttpGet]
         [ClaimsAuthorize(Permissao)]
-        public async Task<IEnumerable<ContaAPagarViewModel>> Listar()
+        public async Task<IEnumerable<PagamentoViewModel>> Listar()
         {
             var lista = await _repository.ListarTodos();
             lista = lista.OrderBy(i => i.DtVencimento).ToList();
-            return _mapper.Map<IEnumerable<ContaAPagarViewModel>>(lista);
+            return _mapper.Map<IEnumerable<PagamentoViewModel>>(lista);
         }
 
         [HttpGet("{id:int}")]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<ContaAPagarViewModel>> ObterPorId(int id)
+        public async Task<ActionResult<PagamentoViewModel>> ObterPorId(int id)
         {
             var pagamento = await _repository.ObterPorId(id);
 
-            return _mapper.Map<ContaAPagarViewModel>(pagamento);
+            return _mapper.Map<PagamentoViewModel>(pagamento);
         }
 
         [HttpPut("{id:int}")]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<ContaAPagarViewModel>> Editar(int id, ContaAPagarViewModel contaAPagar)
+        public async Task<ActionResult<PagamentoViewModel>> Editar(int id, PagamentoViewModel contaAPagar)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 

@@ -21,9 +21,17 @@ namespace Business.Services
 
         }
 
-        public async Task Adicionar(Pagamento Pagamento)
+        public async Task Adicionar(Pagamento pagamento)
         {
-            await _repository.Adicionar(Pagamento);
+            await _repository.Adicionar(pagamento);
+        }
+
+        public async Task Adicionar(List<Pagamento> lstGerarPagamentos)
+        {
+            foreach (var pagamento in lstGerarPagamentos)
+            {
+                await _repository.Adicionar(pagamento);
+            }
         }
 
         public async Task Editar(int Id, Pagamento pagamento)
@@ -44,7 +52,6 @@ namespace Business.Services
         public async Task Excluir(int id)
         {
             var entity = await _repository.ObterPorId(id);
-            if (entity.DtVencimento.Day == 1) { Notify("Teste validação"); return; }
            
             await _repository.Remover(entity);
         }
@@ -62,5 +69,7 @@ namespace Business.Services
             entity.IndPago = indPago;
             await _repository.Editar(entity);
         }
+
+       
     }
 }

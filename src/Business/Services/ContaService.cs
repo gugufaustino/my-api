@@ -22,13 +22,47 @@ namespace Business.Services
             _repository = contaRepository;
             _pagamentoService = pagamentoService;
         }
-  
-        public async Task AdicionarPagamento(Pagamento pagamento)
-        {
-            await _repository.Adicionar(pagamento.Conta);
 
+        public async Task AdicionarPagamentoUnico(Pagamento pagamento)
+        {
+            if (pagamento.Conta.TipoRecorrencia != Models.Enum.TipoRecorrenciaEnum.Unico)
+            { Notify("Operação inválida"); return; }
+
+
+            if (pagamento.DtVencimento == DateTime.MinValue)
+            { Notify("Data vencimento inválida. Se o Tipo Recorência for Único, então você deve informar uma Data de Vencimento"); return; }
+
+            await _repository.Adicionar(pagamento.Conta);
             await _pagamentoService.Adicionar(pagamento);
 
+        }
+
+
+        public async Task AdicionarPagamentoMensal(Pagamento pagamento, int diaVencimento)
+        {
+
+            List<Pagamento> lstGerarPagamentos = new List<Pagamento>();
+
+            int parcelasNoAno = 12 - DateTime.Now.Month;
+            for (int i = 0; i < parcelasNoAno; i++)
+            {
+                var dtHj = DateTime.Now.Date;
+                var dtVencMes = new DateTime(dtHj.Year,
+                                            dtHj.AddMonths(i).Month,
+                                            diaVencimento);
+
+                var pagamentoMes = new Pagamento
+                {
+                    DtVencimento = dtVencMes,
+                    Valor = pagamento.Valor,
+                    IndPago = false,
+                    Conta = pagamento.Conta,
+                };
+                lstGerarPagamentos.Add(pagamentoMes);
+            }
+
+            await _repository.Adicionar(pagamento.Conta);
+            await _pagamentoService.Adicionar(lstGerarPagamentos);
         }
 
         public async Task Excluir(int id)
