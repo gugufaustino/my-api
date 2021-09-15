@@ -63,6 +63,8 @@ namespace Business.Services
 
             await _repository.Adicionar(pagamento.Conta);
             await _pagamentoService.Adicionar(lstGerarPagamentos);
+
+            NotifyAsSuccess($"Operação realizada. Foram incluídas {parcelasNoAno} parcelas.");
         }
 
         public async Task Excluir(int id)

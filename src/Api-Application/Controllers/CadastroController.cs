@@ -110,7 +110,7 @@ namespace ApiApplication.Controllers
             UsuarioViewModel usuarioViewModel = null;
             if (usuarioViewModel == null) return NotFound();
 
-            return   CustomResponse();
+            return CustomResponse();
         }
     }
 }

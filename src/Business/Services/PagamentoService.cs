@@ -56,10 +56,6 @@ namespace Business.Services
             await _repository.Remover(entity);
         }
 
-        public void Dispose()
-        {
-            _repository?.Dispose();
-        }
 
         public async Task EditarPago(int id, bool indPago)
         {
@@ -70,6 +66,10 @@ namespace Business.Services
             await _repository.Editar(entity);
         }
 
-       
+        public void Dispose()
+        {
+            _repository?.Dispose();
+        }
+
     }
 }

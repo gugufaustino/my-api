@@ -4,6 +4,7 @@ using Business.Notifications;
 using FluentValidation;
 using FluentValidation.Results;
 using System;
+using System.Threading.Tasks;
 
 namespace Business.Services
 {
@@ -27,7 +28,7 @@ namespace Business.Services
             return false;
         }
 
-        protected void Notify(ValidationResult validationResult)
+        private void Notify(ValidationResult validationResult)
         {
             foreach (var error in validationResult.Errors)
             {
@@ -37,7 +38,13 @@ namespace Business.Services
 
         protected void Notify(string errorMessage)
         {
-            _broadcaster.ToTransmit(new Notification(errorMessage));
+            _broadcaster.ToTransmit(new Notification(errorMessage, TypeNotification.Error));
         }
+
+        protected void NotifyAsSuccess(string successMessage)
+        {
+            _broadcaster.ToTransmit(new Notification(successMessage, TypeNotification.Success));
+        }
+
     }
 }

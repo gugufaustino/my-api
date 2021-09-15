@@ -16,8 +16,7 @@ namespace ApiApplication.Controllers
     {
         protected readonly IBroadcaster _broadcaster;
          
-        public BaseApiController(IBroadcaster broadcaster
-                               )
+        public BaseApiController(IBroadcaster broadcaster)
         {
             _broadcaster = broadcaster;
         }
@@ -30,7 +29,7 @@ namespace ApiApplication.Controllers
                 foreach (var erro in errors)
                 {
                     var message = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message ;
-                    _broadcaster.ToTransmit(new Notification(message));
+                    _broadcaster.ToTransmit(new Notification(message, TypeNotification.Error));
                 }
             }
 
@@ -57,7 +56,8 @@ namespace ApiApplication.Controllers
             return Ok(new
             {
                 success = true,
-                data = result
+                data = result,
+                message = _broadcaster.GetNotifications(TypeNotification.Success).Select(i => i.Message)
             }); ;
 
         }
@@ -69,8 +69,8 @@ namespace ApiApplication.Controllers
 
         protected void fakeError()
         {
-            _broadcaster.ToTransmit(new Notification("1 fake error acionado"));
-            _broadcaster.ToTransmit(new Notification("2 fake error acionado"));
+            _broadcaster.ToTransmit(new Notification("1 fake error acionado" ));
+            _broadcaster.ToTransmit(new Notification("2 fake error acionado" ));
         }
 
     }

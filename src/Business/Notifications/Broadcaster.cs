@@ -13,14 +13,14 @@ namespace Business.Notifications
         {
             _notifications = new List<Notification>();
         }
-        public List<Notification> GetNotifications()
+        public List<Notification> GetNotifications(TypeNotification typeNotification)
         {
-            return _notifications;
+            return _notifications.Where(i=> i.TypeNotification == typeNotification).ToList();
         }
 
-        public bool HasNotifications()
+        public bool HasNotifications(TypeNotification typeNotification)
         {
-            return _notifications.Any();
+            return _notifications.Any(i=> i.TypeNotification == typeNotification);
         }
 
         public void ToTransmit(Notification notification)
