@@ -18,6 +18,7 @@ namespace Data.Contexto
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Conta> Contas { get; set; }
         public DbSet<Pagamento> Pagamentos { get; set; }
+        public DbSet<Fornecedor> Fornecedor { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -9,6 +9,7 @@ namespace ApiApplication.Configuration
         public AutomapperConfig()
         {
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
+            CreateMap<Fornecedor, FornecedorViewModel>().ReverseMap();
 
             // DE -> PARA
             // Conta -> Model
