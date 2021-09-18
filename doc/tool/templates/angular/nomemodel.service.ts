@@ -4,13 +4,13 @@ import { Observable } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { IObter } from 'src/app/base-contracts/services/iobter.service';
 import { BaserService } from 'src/app/services/base.service';
-import { Fornecedor } from '../models/fornecedor';
+
 
 @Injectable()
-export class FornecedorService<TEntity> extends BaserService
+export class #NomeModel#Service<TEntity> extends BaserService
   implements IObter<TEntity> {
 
-  private apiUrl: string = 'fornecedor/';
+  private apiUrl: string = '#nomemodel#/';
 
   constructor(private http: HttpClient) { super(); }
 
@@ -39,7 +39,7 @@ export class FornecedorService<TEntity> extends BaserService
     return response;
   }
 
-  public editar(model: Fornecedor): Observable<TEntity> {
+  public editar(model: #NomeModel#): Observable<TEntity> {
     let response = this.http
       .put(this.UrlServiceV1 + this.apiUrl + model.id, model, this.ObterHeaderAuthJson())
       .pipe(map(this.extractData), catchError(this.serviceError));

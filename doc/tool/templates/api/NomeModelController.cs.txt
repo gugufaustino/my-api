@@ -61,6 +61,18 @@ namespace ApiApplication.Controllers
 
             return _mapper.Map<#NomeModel#ViewModel>(#nomemodel#);
         }
+        
+        [HttpPost]
+        [ClaimsAuthorize(Permissao)]
+        public async Task<ActionResult<#NomeModel#ViewModel>> Inserir(#NomeModel#ViewModel #nomemodel#)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var entity = _mapper.Map<#NomeModel#>(#nomemodel#);
+            await _service.Adicionar(entity);
+
+            return CustomResponse();
+        }
 
         [HttpPut("{id:int}")]
         [ClaimsAuthorize(Permissao)]

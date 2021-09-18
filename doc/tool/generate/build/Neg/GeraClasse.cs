@@ -25,7 +25,15 @@ namespace gcpbuild.Neg
             foreach (var filePath in lstFiles)
             {
                 var file = new FileInfo(filePath);
-                var fileNameResultado = file.Name.Replace("NomeModel", nomeChave);
+                string fileNameResultado;
+                
+                if (file.Name.Contains("NomeModel"))
+                    fileNameResultado = file.Name.Replace("NomeModel", nomeChave);
+                else if (file.Name.Contains("nomemodel"))
+                    fileNameResultado = file.Name.Replace("nomemodel", nomeChave.ToLower());
+                else
+                    fileNameResultado = file.Name;
+
                 fileNameResultado = fileNameResultado.Replace(".txt", "");
 
                 StringBuilder sb = new StringBuilder(File.ReadAllText(filePath));

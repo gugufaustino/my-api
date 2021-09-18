@@ -13,8 +13,10 @@ namespace gcpbuild
 
             var cls = new GeraClasse();
             cls.ReplaceTemplates(NomeEntidade);
-            Console.WriteLine($"Concluído, arquivo gerado na pasta '{cls._pastaResultado}'");
-
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"Concluído com sucesso!");
+            Console.WriteLine($"Confira o resultado na pasta '{cls._pastaResultado}'");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         private static void ValidationArgs(string[] args)

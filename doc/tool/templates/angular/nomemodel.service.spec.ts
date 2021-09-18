@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-import { FornecedorService } from './fornecedor.service';
+import { #NomeModel#Service } from './#nomemodel#.service';
 
  
 
-describe('FornecedorService', () => {
-  let service: FornecedorService;
+describe('#NomeModel#Service', () => {
+  let service: #NomeModel#Service;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(FornecedorService);
+    service = TestBed.inject(#NomeModel#Service);
   });
 
   it('should be created', () => {
