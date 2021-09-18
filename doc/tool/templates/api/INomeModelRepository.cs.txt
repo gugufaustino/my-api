@@ -1,6 +1,7 @@
-﻿namespace Business.Interface.Repository
+﻿using Business.Models;
+namespace Business.Interface.Repository
 {
-    public interface IFornecedorRepository : IRepository<Fornecedor>
+    public interface I#NomeModel#Repository : IRepository<#NomeModel#>
     {
     }
 }
