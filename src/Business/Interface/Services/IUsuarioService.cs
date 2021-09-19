@@ -9,7 +9,6 @@ namespace Business.Interface.Services
     public interface IUsuarioService : IDisposable
     {
         Task Adicionar(Usuario usuario);
-
         Task<Usuario> ObterUsuarioLogon(string email);
     }
 }

@@ -10,6 +10,7 @@ namespace ApiApplication.Configuration
         {
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
             CreateMap<Fornecedor, FornecedorViewModel>().ReverseMap();
+            CreateMap<Cliente, ClienteViewModel>().ReverseMap();
 
             // DE -> PARA
             // Conta -> Model

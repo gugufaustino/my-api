@@ -9,33 +9,7 @@ namespace BusinessTest
     public class UnitTest1
     {
 
-        //[TestMethod]
-        public async void  ReqsNormalAdicionarTest() 
-        { 
-        
-
-        }
-
-        public async void  ReqsNormalDeInformaticaAdicionarTest() 
-        { 
-            
-
-        
-        }
-
-        public async void ReqsNormalEnviarTest()
-        {
-
-
-
-        }
-
-        public async void ReqsNormalDeInformaticaEnviarTest()
-        {
-
-
-
-        } 
+         
 
     }
 }

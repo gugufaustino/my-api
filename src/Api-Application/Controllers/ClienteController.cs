@@ -1,4 +1,4 @@
-﻿using ApiApplication.Extensions;
+using ApiApplication.Extensions;
 using ApiApplication.ViewModel;
 using AutoMapper;
 using Business.Interface;
@@ -16,60 +16,58 @@ using System.Threading.Tasks;
 namespace ApiApplication.Controllers
 {
     [Authorize]
-    [Route("api/fornecedor")]
-    public class FornecedorController : BaseApiController
+    [Route("api/cliente")]
+    public class ClienteController : BaseApiController
     {
 
-        const string Permissao = "FORNECEDOR";
+        const string Permissao = "CLIENTE";
 
         private readonly ILogger<ContaController> _logger;
         private readonly IMapper _mapper;
 
 
 
-        private readonly IFornecedorService _service;
-        private readonly IFornecedorRepository _repository;
+        private readonly IClienteService _service;
+        private readonly IClienteRepository _repository;
 
-        public FornecedorController(ILogger<ContaController> logger,
+        public ClienteController(ILogger<ContaController> logger,                              
                                IMapper mapper,
                                IBroadcaster broadcaster,
-                               IFornecedorService service,
-                               IFornecedorRepository repository)
+                               IClienteService service,
+                               IClienteRepository repository)
            : base(broadcaster)
         {
             _logger = logger;
             _service = service;
             _mapper = mapper;
             _repository = repository;
-
-            _logger.Log(LogLevel.Information, "ctor fornecedor");
         }
 
         [HttpGet]
         [ClaimsAuthorize(Permissao)]
-        public async Task<IEnumerable<FornecedorViewModel>> Listar()
+        public async Task<IEnumerable<ClienteViewModel>> Listar()
         {
             var lista = await _repository.ListarTodos();
-            lista = lista.OrderBy(i => i.RazaoSocial).ToList();
-            return _mapper.Map<IEnumerable<FornecedorViewModel>>(lista);
+            lista = lista.ToList();
+            return _mapper.Map<IEnumerable<ClienteViewModel>>(lista);
         }
 
         [HttpGet("{id:int}")]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<FornecedorViewModel>> ObterPorId(int id)
+        public async Task<ActionResult<ClienteViewModel>> ObterPorId(int id)
         {
-            var fornecedor = await _repository.ObterPorId(id);
+            var cliente = await _repository.ObterPorId(id);
 
-            return _mapper.Map<FornecedorViewModel>(fornecedor);
+            return _mapper.Map<ClienteViewModel>(cliente);
         }
-
+        
         [HttpPost]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<FornecedorViewModel>> Inserir(FornecedorViewModel model)
+        public async Task<ActionResult<ClienteViewModel>> Inserir(ClienteViewModel cliente)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var entity = _mapper.Map<Fornecedor>(model);
+            var entity = _mapper.Map<Cliente>(cliente);
             await _service.Adicionar(entity);
 
             return CustomResponse();
@@ -77,11 +75,11 @@ namespace ApiApplication.Controllers
 
         [HttpPut("{id:int}")]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<FornecedorViewModel>> Editar(int id, FornecedorViewModel model)
+        public async Task<ActionResult<ClienteViewModel>> Editar(int id, ClienteViewModel model)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var entity = _mapper.Map<Fornecedor>(model);
+            var entity = _mapper.Map<Cliente>(model);
             await _service.Editar(id, entity);
 
             return CustomResponse();
@@ -95,7 +93,6 @@ namespace ApiApplication.Controllers
 
             return CustomResponse();
         }
-
 
 
     }

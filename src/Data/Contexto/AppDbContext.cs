@@ -18,15 +18,19 @@ namespace Data.Contexto
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Conta> Contas { get; set; }
         public DbSet<Pagamento> Pagamentos { get; set; }
-        public DbSet<Fornecedor> Fornecedor { get; set; }
+        public DbSet<Fornecedor> Fornecedores { get; set; }
+        public DbSet<Cliente> Clientes { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             foreach (var property in modelBuilder.Model.GetEntityTypes()
-                .SelectMany(e => e.GetProperties()
-                        .Where(w => w.ClrType == typeof(string))))
+                .SelectMany(e => e.GetProperties()))
             {
+                if(property.ClrType == typeof(string))
                 property.SetColumnType("varchar(1)");
+                
+                if(property.ClrType == typeof(decimal) || property.ClrType == typeof(decimal?))
+                property.SetColumnType("decimal(18,2)");
             }
 
             // mappeia todas classes mappings de uma vez só

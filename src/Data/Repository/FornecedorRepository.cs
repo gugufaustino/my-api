@@ -19,13 +19,13 @@ namespace Data.Repository
           
         public async override Task<List<Fornecedor>> ListarTodos()
         {
-            return await Db.Fornecedor.AsNoTracking()                            
+            return await Db.Fornecedores.AsNoTracking()                            
                             .ToListAsync();
         }
 
         public async override Task<Fornecedor> ObterPorId(int id)
         {
-            return await Db.Fornecedor
+            return await Db.Fornecedores
                             .FirstAsync(i => i.Id == id);
         }
     }

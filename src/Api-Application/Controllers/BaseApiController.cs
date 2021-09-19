@@ -49,8 +49,10 @@ namespace ApiApplication.Controllers
                 return BadRequest(new
                 {
                     success = false,
-                    errors = _broadcaster.GetNotifications().Select(i => i.Message)
-                });
+                    data = default(object),
+                    message = string.Empty,
+                    errors = _broadcaster.GetNotifications().Select(i => i.Message),
+                });;
             }
 
             return Ok(new

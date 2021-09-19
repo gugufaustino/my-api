@@ -1,5 +1,4 @@
-﻿using Business.Models.Enum;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,5 +12,18 @@ namespace Business.Models
 
         public IEnumerable<Pagamento> Pagamentos { get; set; }
 
+    }
+
+    public enum TipoContaEnum
+    {
+        APagar = 1,
+        AReceber = 2
+    }
+
+    public enum TipoRecorrenciaEnum
+    {
+        Unico = 1,
+        Mensal = 2,
+        Anual = 3,
     }
 }

@@ -1,4 +1,4 @@
-﻿using Business.Models.Enum;
+﻿using Business.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 

@@ -40,6 +40,8 @@ namespace ApiApplication.Controllers
             _service = service;
             _mapper = mapper;
             _repositoryPagamento = repositoryPagamento;
+
+            _logger.Log(LogLevel.Information, "ctor conta");
         }
 
         [HttpGet]
@@ -78,13 +80,13 @@ namespace ApiApplication.Controllers
             var entity = _mapper.Map<Pagamento>(pagamento);
             switch (entity.Conta.TipoRecorrencia)
             {
-                case Business.Models.Enum.TipoRecorrenciaEnum.Unico:
+                case Business.Models.TipoRecorrenciaEnum.Unico:
                     await _service.AdicionarPagamentoUnico(entity);
                     break;
-                case Business.Models.Enum.TipoRecorrenciaEnum.Mensal:
+                case Business.Models.TipoRecorrenciaEnum.Mensal:
                     await _service.AdicionarPagamentoMensal(entity, pagamento.DiaVencimento.Value);
                     break;
-                case Business.Models.Enum.TipoRecorrenciaEnum.Anual:
+                case Business.Models.TipoRecorrenciaEnum.Anual:
                 default:
                     ToTransmit("Não implementado");
                     break;

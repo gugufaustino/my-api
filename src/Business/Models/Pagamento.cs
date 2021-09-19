@@ -12,4 +12,5 @@ namespace Business.Models
 
         public Conta Conta { get; set; }
     }
+     
 }

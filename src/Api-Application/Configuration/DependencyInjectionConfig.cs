@@ -20,6 +20,7 @@ namespace ApiApplication.Configuration
             services.AddScoped<IContaService, ContaService>();
             services.AddScoped<IPagamentoService, PagamentoService>();
             services.AddScoped<IFornecedorService, FornecedorService>();
+            services.AddScoped<IClienteService, ClienteService>();
 
             
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
@@ -28,6 +29,7 @@ namespace ApiApplication.Configuration
             services.AddScoped<IContaRepository, ContaRepository>();
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+            services.AddScoped<IClienteRepository, ClienteRepository>();
 
 
 

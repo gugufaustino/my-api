@@ -9,10 +9,8 @@ namespace Business.Interface.Services
    public interface IFornecedorService : IDisposable
     {
         Task Adicionar(Fornecedor fornecedor);
-        Task Adicionar(List<Fornecedor> lstGerarFornecedors);
-        Task Editar(int Id, Fornecedor fornecedor);
-        
-        Task Excluir(int id);
-        
+        Task Adicionar(List<Fornecedor> lstFornecedores);
+        Task Editar(int Id, Fornecedor fornecedor);        
+        Task Excluir(int id);        
     }
 }

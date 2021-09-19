@@ -25,7 +25,7 @@ namespace Business.Services
 
         public async Task AdicionarPagamentoUnico(Pagamento pagamento)
         {
-            if (pagamento.Conta.TipoRecorrencia != Models.Enum.TipoRecorrenciaEnum.Unico)
+            if (pagamento.Conta.TipoRecorrencia != TipoRecorrenciaEnum.Unico)
             { Notify("Operação inválida"); return; }
 
 
