@@ -35,7 +35,7 @@ namespace Business.Services
         public async Task Editar(int Id, Cliente cliente)
         {
             var entity = await _repository.ObterPorId(Id);
-            //entity.RazaoSocial = cliente.RazaoSocial;
+            entity.Nome= cliente.Nome;
              
 
             await _repository.Editar(entity);
