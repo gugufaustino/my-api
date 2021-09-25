@@ -10,16 +10,20 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+     VAR_PROP: Wellington Faustino
+     VAR_SISTEMA: My API
+     SECRET_VALUE: ${{ secrets.SECRET_TEST }}
 
     steps:
     - uses: actions/checkout@v2
     
     - name: Step1
-      env: 
-       SECRET_VALUE: ${{ secrets.SECRET_TEST }}
       run: |
        echo "Hello World"
-       echo "Essa é a $SECRET_VALUE"      
+       echo "Essa é a SECRET $SECRET_VALUE"      
+       echo "Criado por: VAR $VAR_PROP"
+       echo "Para o App: VAR $VAR_SISTEMA"
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
