@@ -37,3 +37,17 @@ jobs:
       run: dotnet test --no-build --verbosity normal
     - name: Publish
       run: dotnet publish -c release --no-self-contained --no-dependencies -o .\publish\
+  
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.4
+      with:
+        # Artifact name
+        name: artifact # optional, default is artifact
+        # A file, directory or wildcard pattern that describes what to upload
+        path: .\publish\
+        # The desired behavior if no files are found using the provided path.
+    Available Options: error  
+    error: echo    
+    run: |
+       echo "Hello World"
+      echo "q"
