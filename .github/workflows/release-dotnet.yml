@@ -60,5 +60,5 @@ jobs:
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: /home/runner/work/my-api/my-api/
-        server-dir: /www-sub/
+        server-dir: /www/wwwsub/my-api/
 
