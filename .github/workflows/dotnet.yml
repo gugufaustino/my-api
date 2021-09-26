@@ -1,4 +1,4 @@
-name: Build Api
+name: Release
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build-release:
 
     runs-on: ubuntu-latest
     
@@ -19,10 +19,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Step1
+    - name: Print Var
       run: |
-       echo "Hello World"
-       echo "Essa é a SECRET $SECRET_VALUE"      
+       echo "Variaveis de ambiente"         
        echo "Criado por: VAR $VAR_PROP"
        echo "Para o App: VAR $VAR_SISTEMA"
     - name: Setup .NET
