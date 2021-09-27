@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/cadastro")]
     public class CadastroController : BaseApiController
     {

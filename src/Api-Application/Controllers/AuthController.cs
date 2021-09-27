@@ -39,6 +39,7 @@ namespace ApiApplication.Controllers
             _usuarioService = usuarioService;
             _mapper = mapper;
         }
+        
         [HttpPost("nova-conta")]
         public async Task<ActionResult> Registrar(UsuarioViewModel usuarioModel)
         { 
@@ -73,6 +74,7 @@ namespace ApiApplication.Controllers
             return CustomResponse(usuarioModel);
 
         }
+        
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginViewModel login)
         {
