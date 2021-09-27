@@ -1,4 +1,4 @@
-name: Release
+name: Build-Release 🚀
 
 on:
   push:
@@ -7,10 +7,8 @@ on:
     branches: [ master ]
 
 jobs:
-  build-release:
-
-    runs-on: windows-latest
-    
+  build:
+    runs-on: windows-latest    
     env:
      VAR_PROP: Wellington Faustino
      VAR_SISTEMA: My API
@@ -45,8 +43,13 @@ jobs:
         name: my-artifact # optional, default is artifact
         # A file, directory or wildcard pattern that describes what to upload
         path: D:\a\my-api\my-api\publish\
-        # The desired behavior if no files are found using the provided path.
-
+        # The desired behavior if no files are found using the provided path. 
+  
+  release:
+    needs: [build]
+    runs-on: windows-latest    
+    steps:
+    
     - name: Download a Build Artifact
       uses: actions/download-artifact@v2.0.10
       with:
@@ -54,7 +57,7 @@ jobs:
         name: my-artifact # optional
         # Destination path        
         
-    - name: 📂 FTP-Deploy
+    - name: FTP Upload 📂
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
         server: ftp.cteclima.com.br
