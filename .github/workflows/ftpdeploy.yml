@@ -35,3 +35,4 @@ jobs:
         # Artifact name
         name: my-artifact # optional
         # Destination path 
+        path: D:\a\my-api\my-api\publish\
