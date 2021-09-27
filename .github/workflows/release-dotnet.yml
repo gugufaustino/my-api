@@ -60,6 +60,6 @@ jobs:
         server: ftp.cteclima.com.br
         username: ${{ secrets.FTP_USER }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: D:\a\my-api\my-api\publish\
+        local-dir: D:/a/my-api/my-api/publish/
         server-dir: /www/my-api/
 
