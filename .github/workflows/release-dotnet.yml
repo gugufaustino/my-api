@@ -62,9 +62,4 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: D:/a/my-api/my-api/publish/
         server-dir: /www/my-api/
-        exclude:
-           - **/.git*
-           - **/.git*/**
-           - **/node_modules/**
-           - */Microsoft.Extensions.FileSystemGlobbing.dll
-
+        exclude: "*/Microsoft.Extensions.FileSystemGlobbing.dll"
