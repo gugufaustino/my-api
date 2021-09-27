@@ -36,7 +36,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish my-api.sln -c release -f net5.0 -r win-x64 --self-contained true /p:AspNetCoreHostingModel=outofprocess //p:EnvironmentName=Development -o .\\publish\\
+      run: dotnet publish my-api.sln -c release -f net5.0 -r win-x64 --self-contained true /p:AspNetCoreHostingModel=outofprocess /p:EnvironmentName=Development -o .\\publish\\
   
     - name: 🚀 Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.4
