@@ -19,7 +19,7 @@ namespace ApiApplication.Controllers
 {
      
     [Route("api/status")]
-    public class AppStatusController 
+    public class AppStatusController : ControllerBase
     {
 
         const string Permissao = "STATUS";
@@ -44,10 +44,17 @@ namespace ApiApplication.Controllers
             return STATUS;            
         }
         [HttpPost]
-        public void Post(string tolken)
+        public ActionResult Post(string tolken)
         {
             if (tolken == "stop-st")
+            {
                 _hostApplicationLifetime.StopApplication();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

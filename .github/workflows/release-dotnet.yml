@@ -57,8 +57,8 @@ jobs:
     - name: Stop Application
       uses: fjogeleit/http-request-action@master
       with:
-        url: $VAR_SiteStatus${{ secrets.SECRET_TOLKEN_STOP }}
-        method: 'POST'       
+        url: https://myapi.cteclima.com.br/api/status?${{ secrets.SECRET_TOLKEN_STOP }}
+        method: 'POST'
         
 
     - name: FTP Upload 📂
