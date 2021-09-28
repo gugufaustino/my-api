@@ -32,5 +32,5 @@ jobs:
       with:
         url: 'https://myapi.cteclima.com.br/api/status/'
         method: 'POST'
-        contentType: application/json
+        contentType: 'application/x-www-form-urlencoded'
         data : '{ "tolken": "${{ github.event.inputs.name }}" }'
