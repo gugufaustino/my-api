@@ -47,6 +47,7 @@ namespace ApiApplication.Controllers
         [HttpPost]
         public void Post(string tolken)
         {
+
             if (tolken == "stop-st")
                 _hostApplicationLifetime.StopApplication();
         }

@@ -59,7 +59,7 @@ jobs:
         url: 'https://myapi.cteclima.com.br/api/status/'
         method: 'POST'
         contentType: application/json
-        data : '{tolken : "stop-st"}'
+        data : '{ "tolken": "stop-st" }'
 
     - name: FTP Upload 📂
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
