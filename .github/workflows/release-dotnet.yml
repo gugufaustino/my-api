@@ -54,12 +54,12 @@ jobs:
       with:        
         name: my-artifact             
     
-    - name: Stop Application
-      uses: fjogeleit/http-request-action@master
-      with:
-        url: https://myapi.cteclima.com.br/api/status
-        method: 'POST'
-        data: ${{ secrets.SECRET_TOLKEN_STOP }}
+    #- name: Stop Application
+    #  uses: fjogeleit/http-request-action@master
+    #  with:
+    #    url: https://myapi.cteclima.com.br/api/status
+    #    method: 'POST'
+    #    data: ${{ secrets.SECRET_TOLKEN_STOP }}
         
 
     - name: FTP Upload 📂
