@@ -56,10 +56,9 @@ jobs:
     - name: Stop Application
       uses: fjogeleit/http-request-action@master
       with:
-        url: 'https://myapi.cteclima.com.br/api/status/'
-        method: 'POST'
-        contentType: application/json
-        data : '{ "tolken": "stop-st" }'
+        url: 'https://myapi.cteclima.com.br/api/status?tolken=stop-st'
+        method: 'POST'       
+        
 
     - name: FTP Upload 📂
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
