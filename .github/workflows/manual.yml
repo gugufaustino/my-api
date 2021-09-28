@@ -30,7 +30,7 @@ jobs:
     - name: Stop Application
       uses: fjogeleit/http-request-action@master
       with:
-        url: 'https://myapi.cteclima.com.br/api/status'
+        url: https://myapi.cteclima.com.br/api/status
         method: 'POST'   
         data: "stop-st"
         
