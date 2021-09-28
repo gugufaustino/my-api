@@ -40,14 +40,12 @@ namespace ApiApplication.Controllers
         [HttpGet] 
         public ActionResult<string> Get()
         {
-            var STATUS = $"APP - ON as {_hostingEnvironment.EnvironmentName}";
-
+            var STATUS = $"APP - ON as {_hostingEnvironment.EnvironmentName} <br>";
             return STATUS;            
         }
         [HttpPost]
         public void Post(string tolken)
         {
-
             if (tolken == "stop-st")
                 _hostApplicationLifetime.StopApplication();
         }

@@ -14,6 +14,7 @@ jobs:
      VAR_SISTEMA: My API
      SECRET_VALUE: ${{ secrets.SECRET_TEST }}
      VAR_Environment: Development
+     VAR_SiteStatus: 'https://myapi.cteclima.com.br/api/status?'
 
     steps:
     - uses: actions/checkout@v2
@@ -56,7 +57,7 @@ jobs:
     - name: Stop Application
       uses: fjogeleit/http-request-action@master
       with:
-        url: 'https://myapi.cteclima.com.br/api/status?tolken=stop-st'
+        url: '$VAR_SiteStatus${{ secrets.SECRET_TOLKEN_STOP }}'
         method: 'POST'       
         
 
