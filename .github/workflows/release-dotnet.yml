@@ -54,13 +54,12 @@ jobs:
       with:        
         name: my-artifact             
     
-    #- name: Stop Application
-    #  uses: fjogeleit/http-request-action@master
-    #  with:
-    #    url: https://myapi.cteclima.com.br/api/status
-    #    method: 'POST'
-    #    data: ${{ secrets.SECRET_TOLKEN_STOP }}
-        
+    - name: Stop Application
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: https://myapi.cteclima.com.br/api/status
+        method: 'POST'
+        data: ${{ secrets.SECRET_TOLKEN_STOP }}        
 
     - name: FTP Upload 📂
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
@@ -70,4 +69,4 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: D:/a/my-api/my-api/
         server-dir: /www/my-api/
-        exclude: "*/Microsoft.Extensions.FileSystemGlobbing.dll"
+        exclude: "Microsoft.Extensions.FileSystemGlobbing.dll"
