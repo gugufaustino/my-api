@@ -26,12 +26,15 @@ namespace ApiApplication.Controllers
 
         private readonly ILogger<CadastroController> _logger;
         private readonly IHostEnvironment _hostingEnvironment;
+        private readonly IHostApplicationLifetime _hostApplicationLifetime;
 
         public AppStatusController(ILogger<CadastroController> logger,
-                                    IHostEnvironment hostingEnvironment)
+                                    IHostEnvironment hostingEnvironment,
+                                    IHostApplicationLifetime hostApplicationLifetime)
         {
             _logger = logger;
             _hostingEnvironment = hostingEnvironment;
+            _hostApplicationLifetime = hostApplicationLifetime;
         }
 
         [HttpGet] 
@@ -40,6 +43,12 @@ namespace ApiApplication.Controllers
             var STATUS = $"APP - ON as {_hostingEnvironment.EnvironmentName}";
 
             return STATUS;            
-        } 
+        }
+        [HttpPost]
+        public void Post(string tolken)
+        {
+            if (tolken == "stop-st")
+                _hostApplicationLifetime.StopApplication();
+        }
     }
 }
