@@ -52,7 +52,15 @@ jobs:
       uses: actions/download-artifact@v2.0.10
       with:        
         name: my-artifact             
-        
+    
+    - name: Stop Application
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: 'https://myapi.cteclima.com.br/api/status/'
+        method: 'POST'
+        contentType: application/json
+        data : '{tolken : "stop-st"}'
+
     - name: FTP Upload 📂
       uses: SamKirkland/FTP-Deploy-Action@4.1.0
       with:
