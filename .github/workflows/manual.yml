@@ -19,7 +19,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  greet:
+  Run:
     # The type of runner that the job will run on
     runs-on: windows-latest 
 
@@ -30,7 +30,7 @@ jobs:
     - name: Stop Application
       uses: fjogeleit/http-request-action@master
       with:
-        url: 'https://myapi.cteclima.com.br/api/status/'
+        url: 'https://myapi.cteclima.com.br/api/status/?tolken=stop-st'
         method: 'POST'
-        contentType: 'application/x-www-form-urlencoded'
-        data : '{ "tolken": "${{ github.event.inputs.name }}" }'
+        contentType: application/json
+        data : ''
