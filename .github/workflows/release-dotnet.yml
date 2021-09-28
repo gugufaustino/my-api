@@ -57,7 +57,7 @@ jobs:
     - name: Stop Application
       uses: fjogeleit/http-request-action@master
       with:
-        url: '$VAR_SiteStatus${{ secrets.SECRET_TOLKEN_STOP }}'
+        url: $VAR_SiteStatus${{ secrets.SECRET_TOLKEN_STOP }}
         method: 'POST'       
         
 
