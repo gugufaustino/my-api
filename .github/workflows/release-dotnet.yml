@@ -13,7 +13,7 @@ jobs:
      VAR_PROP: Wellington Faustino
      VAR_SISTEMA: My API
      SECRET_VALUE: ${{ secrets.SECRET_TEST }}
-     VAR_Environment: Development
+     VAR_Environment: Staging
      VAR_SiteStatus: 'https://myapi.cteclima.com.br/api/status?'
 
     steps:
@@ -70,4 +70,7 @@ jobs:
         local-dir: D:/a/my-api/my-api/
         server-dir: /www/my-api/
         exclude: |
-                 - Microsoft.Extensions.FileSystemGlobbing.dll
+          - **/.git*
+          - **/.git*/**
+          - **/node_modules/**
+          - **/Microsoft.Extensions.FileSystemGlobbing.dll   
