@@ -30,6 +30,10 @@ namespace ApiApplication.Configuration
                             builder => builder.AllowAnyOrigin()
                                                 .AllowAnyMethod()
                                                 .AllowAnyHeader());
+                options.AddPolicy("Staging",
+                            builder => builder.AllowAnyOrigin()
+                                                .AllowAnyMethod()
+                                                .AllowAnyHeader());
 
                 options.AddPolicy("Production",
                            builder => builder.WithOrigins(corsOrigins)
