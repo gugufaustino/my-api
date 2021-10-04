@@ -5,7 +5,6 @@ using Business.Interface;
 using Business.Interface.Repository;
 using Business.Interface.Services;
 using Business.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
@@ -15,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {
-    [Authorize]
     [Route("api/conta")]
     public class ContaController : BaseApiController
     {

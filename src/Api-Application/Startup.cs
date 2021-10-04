@@ -43,8 +43,6 @@ namespace ApiApplication
             services.ResolveDependencies();
         }
 
-
-
         public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
 

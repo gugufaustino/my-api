@@ -15,29 +15,23 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {
-    [Authorize]
     [Route("api/cliente")]
     public class ClienteController : BaseApiController
     {
 
         const string Permissao = "CLIENTE";
 
-        private readonly ILogger<ContaController> _logger;
         private readonly IMapper _mapper;
-
-
 
         private readonly IClienteService _service;
         private readonly IClienteRepository _repository;
 
-        public ClienteController(ILogger<ContaController> logger,                              
-                               IMapper mapper,
-                               IBroadcaster broadcaster,
-                               IClienteService service,
-                               IClienteRepository repository)
+        public ClienteController(IMapper mapper,
+                                 IBroadcaster broadcaster,
+                                 IClienteService service,
+                                 IClienteRepository repository)
            : base(broadcaster)
         {
-            _logger = logger;
             _service = service;
             _mapper = mapper;
             _repository = repository;

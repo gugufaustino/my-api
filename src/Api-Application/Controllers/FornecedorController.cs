@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {
-    [Authorize]
     [Route("api/fornecedor")]
     public class FornecedorController : BaseApiController
     {

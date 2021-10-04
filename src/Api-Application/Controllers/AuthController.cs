@@ -4,6 +4,7 @@ using AutoMapper;
 using Business.Interface;
 using Business.Interface.Services;
 using Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {
+    [AllowAnonymous]
     [Route("api")]
     public class AuthController : BaseApiController
     {
@@ -28,8 +30,8 @@ namespace ApiApplication.Controllers
         private readonly IMapper _mapper;
 
         public AuthController(IBroadcaster broadcaster,
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager,
+             SignInManager<IdentityUser> signInManager,
+             UserManager<IdentityUser> userManager,
              IOptions<AppSettings> appSettings,
              IUsuarioService usuarioService, IMapper mapper) : base(broadcaster)
         {
@@ -39,18 +41,18 @@ namespace ApiApplication.Controllers
             _usuarioService = usuarioService;
             _mapper = mapper;
         }
-        
+
         [HttpPost("nova-conta")]
         public async Task<ActionResult> Registrar(UsuarioViewModel usuarioModel)
-        { 
+        {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
-  
-            var usuarioo = _mapper.Map<Usuario>(usuarioModel); 
+
+            var usuarioo = _mapper.Map<Usuario>(usuarioModel);
 
             await _usuarioService.Adicionar(usuarioo);
             if (_broadcaster.HasNotifications()) return CustomResponse(usuarioModel);
 
-            IdentityUser identityUser = new IdentityUser
+            IdentityUser identityUser = new()
             {
                 UserName = usuarioModel.Email,
                 Email = usuarioModel.Email,
@@ -74,7 +76,7 @@ namespace ApiApplication.Controllers
             return CustomResponse(usuarioModel);
 
         }
-        
+
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginViewModel login)
         {
@@ -109,14 +111,14 @@ namespace ApiApplication.Controllers
             {
                 claims.Add(new Claim("role", role));
             }
-           
-            claims.Add(new Claim(nameof(Usuario.Apelido), usuario.Apelido ?? "" ));
+
+            claims.Add(new Claim(nameof(Usuario.Apelido), usuario.Apelido ?? ""));
             claims.Add(new Claim(nameof(Usuario.CPF), usuario.CPF));
             claims.Add(new Claim(nameof(Usuario.Telefone), usuario.Telefone ?? ""));
             claims.Add(new Claim(nameof(Usuario.Imagem), usuario.Imagem ?? ""));
-           
+
             var claimsUserToken = new List<Claim>(claims);
-            
+
             //claims usadas pelo Identity não precisam ficar abertas no userToken
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, identityUser.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, identityUser.Id));
@@ -142,18 +144,18 @@ namespace ApiApplication.Controllers
 
             var encoded = tokenHandler.WriteToken(token);
 
-            
+
             var response = new LoginResponseViewModel
             {
                 AccessToken = encoded,
                 UserToken = new UserTokenViewModel
                 {
-                     Id = identityUser.Id,
-                     Email = identityUser.Email,
-                     Nome = usuario.Nome,
-                     Claims = claimsUserToken.Select(c=> new ClaimViewModel { Type = c.Type, Value = c.Value})
+                    Id = identityUser.Id,
+                    Email = identityUser.Email,
+                    Nome = usuario.Nome,
+                    Claims = claimsUserToken.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }
-            }; 
+            };
 
             return response;
         }

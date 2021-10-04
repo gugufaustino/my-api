@@ -15,18 +15,14 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {
-    [Authorize]
     [Route("api/pagamento")]
     public class PagamentoController : BaseApiController
     {
 
         const string Permissao = "PAGAMENTO";
 
-        private readonly ILogger<ContaController> _logger;
         private readonly IMapper _mapper;
-
-
-
+        
         private readonly IPagamentoService _service;
         private readonly IPagamentoRepository _repository;
 
@@ -37,7 +33,6 @@ namespace ApiApplication.Controllers
                                IPagamentoRepository repository)
            : base(broadcaster)
         {
-            _logger = logger;
             _service = service;
             _mapper = mapper;
             _repository = repository;
@@ -94,8 +89,5 @@ namespace ApiApplication.Controllers
 
             return CustomResponse();
         }
-
-
-
     }
 }

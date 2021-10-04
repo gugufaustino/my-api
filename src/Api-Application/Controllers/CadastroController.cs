@@ -16,27 +16,22 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {
-    [Authorize]
     [Route("api/cadastro")]
     public class CadastroController : BaseApiController
     {
 
-
         const string Permissao = "USUARIO";
-
-        private readonly ILogger<CadastroController> _logger;
+       
         private readonly IUsuarioRepository _repository;
         private readonly IUsuarioService _service;
         private readonly IMapper _mapper;
 
-        public CadastroController(ILogger<CadastroController> logger,
-                                    IUsuarioRepository repository,
-                                    IUsuarioService service,
-                                    IMapper mapper,
-                                    IBroadcaster broadcaster)
+        public CadastroController(IUsuarioRepository repository,
+                                  IUsuarioService service,
+                                  IMapper mapper,
+                                  IBroadcaster broadcaster)
            : base(broadcaster)
         {
-            _logger = logger;
             _repository = repository;
             _service = service;
             _mapper = mapper;
@@ -105,10 +100,10 @@ namespace ApiApplication.Controllers
         }
 
         [HttpDelete("{id}")]
-        public  ActionResult  Delete(int id)
+        public  ActionResult Delete(int id)
         {
-            UsuarioViewModel usuarioViewModel = null;
-            if (usuarioViewModel == null) return NotFound();
+            UsuarioViewModel usuarioViewModel = new() { Id = id };
+            if (usuarioViewModel.Nome == null) return NotFound();
 
             return CustomResponse();
         }

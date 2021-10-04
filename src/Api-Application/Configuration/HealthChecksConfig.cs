@@ -33,8 +33,7 @@ namespace ApiApplication.Configuration
         {
             endpoints.MapHealthChecks("/health", new HealthCheckOptions()
             {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                Predicate = _ => true, ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
             endpoints.MapHealthChecksUI(config =>
             {

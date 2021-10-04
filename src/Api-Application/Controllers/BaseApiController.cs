@@ -1,8 +1,10 @@
 ﻿using ApiApplication.Extensions;
 using Business.Interface;
 using Business.Notifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -11,11 +13,13 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {
+    [Authorize]
     [ApiController]
     public abstract class BaseApiController : ControllerBase
     {
         protected readonly IBroadcaster _broadcaster;
-         
+        //private readonly ILogger<BaseApiController> _logger;
+
         public BaseApiController(IBroadcaster broadcaster)
         {
             _broadcaster = broadcaster;
@@ -28,7 +32,7 @@ namespace ApiApplication.Controllers
                 var errors = modelState.Values.SelectMany(v => v.Errors);
                 foreach (var erro in errors)
                 {
-                    var message = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message ;
+                    var message = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
                     _broadcaster.ToTransmit(new Notification(message, TypeNotification.Error));
                 }
             }
@@ -48,18 +52,18 @@ namespace ApiApplication.Controllers
             {
                 return BadRequest(new
                 {
-                    success = false,
                     data = default(object),
-                    message = string.Empty,
                     errors = _broadcaster.GetNotifications().Select(i => i.Message),
-                });;
+                    message = string.Empty,
+                    success = false,
+                }); ;
             }
 
             return Ok(new
             {
-                success = true,
                 data = result,
-                message = _broadcaster.GetNotifications(TypeNotification.Success).Select(i => i.Message)
+                message = _broadcaster.GetNotifications(TypeNotification.Success).Select(i => i.Message),
+                success = true,
             }); ;
 
         }
@@ -69,10 +73,10 @@ namespace ApiApplication.Controllers
             _broadcaster.ToTransmit(new Notification(description));
         }
 
-        protected void fakeError()
+        protected void FakeError()
         {
-            _broadcaster.ToTransmit(new Notification("1 fake error acionado" ));
-            _broadcaster.ToTransmit(new Notification("2 fake error acionado" ));
+            _broadcaster.ToTransmit(new Notification("1 fake error acionado"));
+            _broadcaster.ToTransmit(new Notification("2 fake error acionado"));
         }
 
     }

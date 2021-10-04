@@ -21,18 +21,12 @@ namespace ApiApplication.Controllers
     [Route("api/status")]
     public class AppStatusController : ControllerBase
     {
-
-        const string Permissao = "STATUS";
-
-        private readonly ILogger<CadastroController> _logger;
         private readonly IHostEnvironment _hostingEnvironment;
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
 
-        public AppStatusController(ILogger<CadastroController> logger,
-                                    IHostEnvironment hostingEnvironment,
-                                    IHostApplicationLifetime hostApplicationLifetime)
+        public AppStatusController(IHostEnvironment hostingEnvironment,
+                                   IHostApplicationLifetime hostApplicationLifetime)
         {
-            _logger = logger;
             _hostingEnvironment = hostingEnvironment;
             _hostApplicationLifetime = hostApplicationLifetime;
         }
