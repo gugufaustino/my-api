@@ -38,7 +38,11 @@ namespace ApiApplication
 
             services.WebApiConfig(Configuration);
 
+            services.AddHealthChecks(Configuration);
+
             services.ResolveDependencies();
+
+             
 
         }
 

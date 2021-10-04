@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+
 namespace ApiApplication.Configuration
 {
     public static class ApiConfig
@@ -40,7 +41,7 @@ namespace ApiApplication.Configuration
                                              .AllowAnyMethod()
                                              .AllowAnyHeader());
 
-            });
+            }); 
 
             return services;
         }
@@ -49,16 +50,19 @@ namespace ApiApplication.Configuration
         {
 
             app.UseHttpsRedirection();
-          
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks();
+
             });
 
             return app;
         }
+         
     }
 }
