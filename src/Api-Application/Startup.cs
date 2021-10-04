@@ -36,15 +36,14 @@ namespace ApiApplication
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.WebApiConfig(Configuration);
+            services.WebApiConfig(Configuration);            
 
             services.AddHealthChecks(Configuration);
 
             services.ResolveDependencies();
-
-             
-
         }
+
+
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
@@ -53,6 +52,9 @@ namespace ApiApplication
             {
                 app.UseCors("Development");
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(setup => setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1"));
+
             }
             else
             {

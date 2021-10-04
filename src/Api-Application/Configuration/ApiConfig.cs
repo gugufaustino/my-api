@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.OpenApi.Models;
 
 namespace ApiApplication.Configuration
 {
@@ -41,7 +41,9 @@ namespace ApiApplication.Configuration
                                              .AllowAnyMethod()
                                              .AllowAnyHeader());
 
-            }); 
+            });
+
+            services.AddOpenApiSwagger();
 
             return services;
         }
@@ -63,6 +65,14 @@ namespace ApiApplication.Configuration
 
             return app;
         }
-         
+
+        private static void AddOpenApiSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApp1", Version = "v1" });
+            });
+        }
+
     }
 }
