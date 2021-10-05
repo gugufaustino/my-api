@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiApplication.Configuration
 {
@@ -24,7 +26,7 @@ namespace ApiApplication.Configuration
             services.AddHealthChecks()
                     .AddCheck<CustomHealthChecks>("API")
                     .AddSqlServer(configuration.GetConnectionString("DefaultConnection"), name: "SQL Server")
-                    .AddDbContextCheck<AppDbContext>($"{nameof(AppDbContext)}(EF DbContext)")
+                    .AddDbContextCheck<AppDbContext>($"{nameof(AppDbContext)}(EF DbContext)", customTestQuery: CustomTestQueryAsync)
                     .AddDbContextCheck<ApplicationDbContext>($"{nameof(ApplicationDbContext)}(EF IdentityDbContext)");
 
         }
@@ -33,7 +35,8 @@ namespace ApiApplication.Configuration
         {
             endpoints.MapHealthChecks("/health", new HealthCheckOptions()
             {
-                Predicate = _ => true, ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
             endpoints.MapHealthChecksUI(config =>
             {
@@ -42,10 +45,21 @@ namespace ApiApplication.Configuration
             });
         }
 
+        public static async Task<bool> CustomTestQueryAsync(AppDbContext context, CancellationToken cancellationToken = default)
+        {
+            var lstMigr = context.Database.GetPendingMigrations();
+            if (lstMigr.Any())
+            {                
+                throw new System.Exception("Migration Pendente: " + lstMigr.First());
+            }
+
+            return await Task.FromResult(true);
+  
+        }
+
         public class CustomHealthChecks : IHealthCheck
         {
-            public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken
-            cancellationToken = default)
+            public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
             {
                 return Task.FromResult(new HealthCheckResult(
                 status: HealthStatus.Healthy,
@@ -53,5 +67,7 @@ namespace ApiApplication.Configuration
                 ));
             }
         }
+
+
     }
 }

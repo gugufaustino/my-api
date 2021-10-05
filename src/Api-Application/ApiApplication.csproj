@@ -17,6 +17,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.Ui.Client" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="5.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.10" />
     <PackageReference Include="microsoft.aspnetcore.identity.entityframeworkcore" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.10" />
     <PackageReference Include="microsoft.entityframeworkcore" Version="5.0.10" />

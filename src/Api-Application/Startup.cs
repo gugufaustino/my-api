@@ -1,11 +1,13 @@
 using ApiApplication.Configuration;
 using Data.Contexto;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 
 namespace ApiApplication
 {
@@ -41,6 +43,9 @@ namespace ApiApplication
             services.AddHealthChecks(Configuration);
 
             services.ResolveDependencies();
+
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env)
@@ -50,6 +55,7 @@ namespace ApiApplication
             {
                 app.UseCors("Development");
                 app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
                 app.UseSwagger();
                 app.UseSwaggerUI(setup => setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1"));
 

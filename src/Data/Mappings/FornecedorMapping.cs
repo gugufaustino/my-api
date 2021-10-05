@@ -16,9 +16,13 @@ namespace Data.Mappings
             builder.Property(p => p.RazaoSocial)
                 .IsRequired()
                 .HasColumnType("varchar(250)");
+            
+            builder.Property(p => p.Cnpj)
+              .IsRequired()
+              .HasColumnType("varchar(14)");
 
 
-            builder.ToTable("Fornecedores");            
+            builder.ToTable("Fornecedores");
 
         }
     }
