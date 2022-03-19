@@ -78,13 +78,13 @@ namespace ApiApplication.Controllers
             var entity = _mapper.Map<Pagamento>(pagamento);
             switch (entity.Conta.TipoRecorrencia)
             {
-                case Business.Models.TipoRecorrenciaEnum.Unico:
+                case TipoRecorrenciaEnum.Unico:
                     await _service.AdicionarPagamentoUnico(entity);
                     break;
-                case Business.Models.TipoRecorrenciaEnum.Mensal:
+                case TipoRecorrenciaEnum.Mensal:
                     await _service.AdicionarPagamentoMensal(entity, pagamento.DiaVencimento.Value);
                     break;
-                case Business.Models.TipoRecorrenciaEnum.Anual:
+                case TipoRecorrenciaEnum.Anual:
                 default:
                     ToTransmit("Não implementado");
                     break;

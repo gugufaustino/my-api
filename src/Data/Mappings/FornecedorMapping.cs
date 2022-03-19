@@ -20,6 +20,10 @@ namespace Data.Mappings
             builder.Property(p => p.Cnpj)
               .IsRequired()
               .HasColumnType("varchar(14)");
+            
+            builder.Property(p => p.Atividade)
+              .IsRequired()
+              .HasColumnType("varchar(250)");
 
 
             builder.ToTable("Fornecedores");

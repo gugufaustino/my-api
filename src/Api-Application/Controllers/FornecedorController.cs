@@ -69,6 +69,7 @@ namespace ApiApplication.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var entity = _mapper.Map<Fornecedor>(model);
+           
             await _service.Adicionar(entity);
 
             return CustomResponse();

@@ -2,6 +2,7 @@
 using Business.Interface.Repository;
 using Business.Interface.Services;
 using Business.Models;
+using Business.Util;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,6 +24,8 @@ namespace Business.Services
 
         public async Task Adicionar(Fornecedor fornecedor)
         {
+
+            fornecedor.Cnpj = fornecedor.Cnpj.RemoverMascara();
             await _repository.Adicionar(fornecedor);
         }
 
@@ -37,7 +40,9 @@ namespace Business.Services
         public async Task Editar(int Id, Fornecedor fornecedor)
         {
             var entity = await _repository.ObterPorId(Id);
-            //entity.RazaoSocial = fornecedor.RazaoSocial;
+            entity.RazaoSocial = fornecedor.RazaoSocial;
+            entity.Cnpj = fornecedor.Cnpj.RemoverMascara();
+            entity.Atividade = fornecedor.Atividade;
              
 
             await _repository.Editar(entity);

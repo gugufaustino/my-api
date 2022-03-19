@@ -6,5 +6,6 @@ namespace Business.Models
     {
         public string RazaoSocial { get; set; }       
         public string Cnpj { get; set; }       
+        public string Atividade { get; set; }       
     }
 }

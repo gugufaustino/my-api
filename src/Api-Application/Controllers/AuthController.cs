@@ -48,7 +48,7 @@ namespace ApiApplication.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var usuarioo = _mapper.Map<Usuario>(usuarioModel);
-
+            //TODO: ENVELOPAR COM TRANSACTION
             await _usuarioService.Adicionar(usuarioo);
             if (_broadcaster.HasNotifications()) return CustomResponse(usuarioModel);
 
