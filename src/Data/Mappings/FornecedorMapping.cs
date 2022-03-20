@@ -24,10 +24,14 @@ namespace Data.Mappings
             builder.Property(p => p.Atividade)
               .IsRequired()
               .HasColumnType("varchar(250)");
-
+           
 
             builder.ToTable("Fornecedores");
 
+            builder.Property(t => t.IdEndereco).IsRequired();
+            builder.HasOne(e => e.Endereco)
+                    .WithMany()
+                    .HasForeignKey(i=> i.IdEndereco);
         }
     }
 }

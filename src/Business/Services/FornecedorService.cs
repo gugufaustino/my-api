@@ -24,8 +24,11 @@ namespace Business.Services
 
         public async Task Adicionar(Fornecedor fornecedor)
         {
-
             fornecedor.Cnpj = fornecedor.Cnpj.RemoverMascara();
+
+
+
+
             await _repository.Adicionar(fornecedor);
         }
 

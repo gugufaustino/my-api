@@ -2,7 +2,7 @@
 
 namespace ApiApplication.ViewModel
 {
-    public class FornecedorViewModel
+    public class FornecedorViewModel : EnderecoViewModel
     {
         public int Id { get; set; }
 
@@ -14,7 +14,5 @@ namespace ApiApplication.ViewModel
         
         [Required]
         public string Atividade { get; set; }
-  
-       
     }
 }
