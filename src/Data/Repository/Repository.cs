@@ -21,6 +21,7 @@ namespace Data
         {
             Db = db;
             DbSet = db.Set<TEntity>();
+                        
         }
 
         public async Task<List<TEntity>> Listar(Expression<Func<TEntity, bool>> predicate)

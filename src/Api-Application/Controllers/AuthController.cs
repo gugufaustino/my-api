@@ -11,11 +11,13 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ApiApplication.Controllers
 {
@@ -48,33 +50,48 @@ namespace ApiApplication.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var usuarioo = _mapper.Map<Usuario>(usuarioModel);
-            //TODO: ENVELOPAR COM TRANSACTION
-            await _usuarioService.Adicionar(usuarioo);
-            if (_broadcaster.HasNotifications()) return CustomResponse(usuarioModel);
-
-            IdentityUser identityUser = new()
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                UserName = usuarioModel.Email,
-                Email = usuarioModel.Email,
-                EmailConfirmed = true
-            };
+                try
+                {
 
-            var result = await _userManager.CreateAsync(identityUser, usuarioModel.Password);
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(identityUser, isPersistent: false);
+                    await _usuarioService.Adicionar(usuarioo);
+                    if (_broadcaster.HasNotifications()) return CustomResponse(usuarioModel);
 
-                usuarioModel.Password = string.Empty;
-                usuarioModel.ConfirmPassword = string.Empty;
-                return CustomResponse(await GerarJwt(usuarioModel.Email));
+                    IdentityUser identityUser = new()
+                    {
+                        UserName = usuarioModel.Email,
+                        Email = usuarioModel.Email,
+                        EmailConfirmed = true
+                    };
+
+                    var result = await _userManager.CreateAsync(identityUser, usuarioModel.Password);
+                    if (!result.Succeeded)
+                    {
+                        foreach (var erro in result.Errors)
+                            ToTransmit(erro.Description);
+                       
+                    }
+                    else
+                    {
+                        await _signInManager.SignInAsync(identityUser, isPersistent: false);
+
+                        usuarioModel.Password = string.Empty;
+                        usuarioModel.ConfirmPassword = string.Empty;
+                        var dataResult = GerarJwt(usuarioModel.Email).Result;
+                        
+                        scope.Complete();
+                        return CustomResponse(dataResult);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    ToTransmit(ex.Message);
+                }
             }
-
-
-            foreach (var erro in result.Errors)
-                ToTransmit(erro.Description);
-
             return CustomResponse(usuarioModel);
-
         }
 
         [HttpPost("login")]
