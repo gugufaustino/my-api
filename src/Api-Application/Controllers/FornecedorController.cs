@@ -83,6 +83,7 @@ namespace ApiApplication.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             var entity = _mapper.Map<Fornecedor>(model);
+            entity.Endereco = _mapper.Map<Endereco>(model);
             await _service.Editar(id, entity);
 
             return CustomResponse();

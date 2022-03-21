@@ -12,6 +12,9 @@ namespace Data.Mappings
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
             builder.HasKey(p => p.Id);
+            builder.Ignore(p => p.Password);
+            builder.Ignore(p => p.ConfirmPassword);
+
 
             builder.Property(p => p.Nome)
                 .IsRequired()
@@ -30,15 +33,7 @@ namespace Data.Mappings
 
             builder.Property(p => p.Apelido)
                     .HasColumnType("varchar(50)");
-
-            builder.Property(p => p.Password)
-                .IsRequired()
-                .HasColumnType("varchar(100)");
-
-            builder.Property(p => p.ConfirmPassword)
-                .IsRequired()
-                .HasColumnType("varchar(100)");
-
+            
             builder.Property(p => p.Imagem)
                 .HasColumnType("varchar(1000)");  
 

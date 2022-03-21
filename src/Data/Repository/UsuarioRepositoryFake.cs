@@ -70,5 +70,10 @@ namespace Data.Repository
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> Existe(Expression<Func<Usuario, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

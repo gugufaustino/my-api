@@ -1,10 +1,13 @@
 ﻿using Business.Interface;
 using Business.Interface.Repository;
 using Business.Interface.Services;
+using Business.Models;
 using Business.Notifications;
 using Business.Services;
+using Business.Services.Validations;
 using Data.Contexto;
 using Data.Repository;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ApiApplication.Configuration
@@ -20,8 +23,10 @@ namespace ApiApplication.Configuration
             services.AddScoped<IContaService, ContaService>();
             services.AddScoped<IPagamentoService, PagamentoService>();
             services.AddScoped<IFornecedorService, FornecedorService>();
+            services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IClienteService, ClienteService>();
 
+            services.AddScoped<IValidator<Fornecedor>, FornecedorValidation>();
             
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             //services.AddScoped<IUsuarioRepository, UsuarioRepositoryFake>();
@@ -29,6 +34,7 @@ namespace ApiApplication.Configuration
             services.AddScoped<IContaRepository, ContaRepository>();
             services.AddScoped<IPagamentoRepository, PagamentoRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
 
 

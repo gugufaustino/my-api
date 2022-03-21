@@ -37,6 +37,11 @@ namespace Data
         {
             return await DbSet.FirstOrDefaultAsync(predicate);
         }
+        
+        public virtual async Task<bool> Existe(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await DbSet.AnyAsync(predicate);
+        }
 
         public virtual async Task<TEntity> ObterPorId(int id)
         {

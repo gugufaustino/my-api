@@ -10,7 +10,6 @@ namespace ApiApplication.Configuration
         {
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
             CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
-            CreateMap<Fornecedor, FornecedorViewModel>().ReverseMap();
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
 
             // DE -> PARA
@@ -18,6 +17,17 @@ namespace ApiApplication.Configuration
             CreateMap<Conta, PagamentoViewModel>()
                 .ForMember(prop => prop.TipoRecorrenciaDescricao, opt => opt.MapFrom(src => src.TipoRecorrencia.ToString()))
                 .ReverseMap();
+
+            CreateMap<Fornecedor, FornecedorViewModel>()
+                .ForMember(prop => prop.Cep, opt => opt.MapFrom(src => src.Endereco.Cep))
+                .ForMember(prop => prop.Logradouro, opt => opt.MapFrom(src => src.Endereco.Logradouro))
+                .ForMember(prop => prop.Numero, opt => opt.MapFrom(src => src.Endereco.Numero))
+                .ForMember(prop => prop.Complemento, opt => opt.MapFrom(src => src.Endereco.Complemento))
+                .ForMember(prop => prop.Bairro, opt => opt.MapFrom(src => src.Endereco.Bairro))
+                .ForMember(prop => prop.NomeMunicipio, opt => opt.MapFrom(src => src.Endereco.NomeMunicipio))
+                .ForMember(prop => prop.SiglaUf, opt => opt.MapFrom(src => src.Endereco.SiglaUf))
+                .ReverseMap();
+
 
             // Pagamento -> Model
             CreateMap<Pagamento, PagamentoViewModel>()

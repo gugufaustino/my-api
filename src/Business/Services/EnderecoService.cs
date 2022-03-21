@@ -2,6 +2,7 @@ using Business.Interface;
 using Business.Interface.Repository;
 using Business.Interface.Services;
 using Business.Models;
+using Business.Util;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace Business.Services
 
         public async Task Adicionar(Endereco endereco)
         {
+            TratamentosBasicos(endereco);
             await _repository.Adicionar(endereco);
         }
 
@@ -28,6 +30,7 @@ namespace Business.Services
         {
             foreach (var endereco in lstGerarEnderecos)
             {
+                TratamentosBasicos(endereco);
                 await _repository.Adicionar(endereco);
             }
         }
@@ -35,6 +38,16 @@ namespace Business.Services
         public async Task Editar(int Id, Endereco endereco)
         {
             var entity = await _repository.ObterPorId(Id);
+            TratamentosBasicos(endereco);
+
+            entity.Cep = endereco.Cep;
+            entity.Logradouro = endereco.Logradouro;
+            entity.Numero = endereco.Numero;
+            entity.Complemento = endereco.Complemento;
+            entity.Bairro = endereco.Bairro;
+            entity.NomeMunicipio= endereco.NomeMunicipio;
+            entity.SiglaUf = endereco.SiglaUf;
+
             await _repository.Editar(entity);
         }
  
@@ -50,6 +63,12 @@ namespace Business.Services
         public void Dispose()
         {
             _repository?.Dispose();
+        }
+
+        private void TratamentosBasicos(Endereco endereco)
+        {
+            endereco.Cep = endereco.Cep.RemoverMascara();
+            endereco.SiglaUf = endereco.SiglaUf.ToUpper();
         }
 
     }

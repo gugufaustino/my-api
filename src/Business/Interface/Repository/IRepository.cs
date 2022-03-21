@@ -12,6 +12,8 @@ namespace Business.Interface.Repository
     {
         Task<TEntity> ObterPorId(int id);
         Task<TEntity> Obter(Expression<Func<TEntity, bool>> predicate);
+        
+        Task<bool> Existe(Expression<Func<TEntity, bool>> predicate);
 
         Task<List<TEntity>> ListarTodos();
         Task<List<TEntity>> Listar(Expression<Func<TEntity, bool>> predicate);

@@ -26,6 +26,7 @@ namespace Data.Repository
         public async override Task<Fornecedor> ObterPorId(int id)
         {
             return await Db.Fornecedores
+                            .Include(i=> i.Endereco)
                             .FirstAsync(i => i.Id == id);
         }
     }

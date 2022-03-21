@@ -18,7 +18,7 @@ namespace Business.Services
 
         }
         protected bool ExecuteValidations<TV,TM>(TV validation, TM model)
-            where TV : AbstractValidator<TM> 
+            where TV : IValidator<TM> 
             where TM : Entity 
         {
           var result =  validation.Validate(model);
