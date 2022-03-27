@@ -17,7 +17,7 @@ namespace Business.Services.Validations
 
         private bool CnpjUnico(Fornecedor fornecedor, string cnpj)
         {
-            return _repository.Existe(i => i.Id != fornecedor.Id && i.Cnpj == cnpj).Result;
+            return !_repository.Existe(i => i.Id != fornecedor.Id && i.Cnpj == cnpj).Result;
 
         }
     }

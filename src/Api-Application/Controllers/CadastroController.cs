@@ -77,15 +77,15 @@ namespace ApiApplication.Controllers
         }
 
 
-        [HttpPost]
-        public async Task<ActionResult<UsuarioViewModel>> Adicionar(UsuarioViewModel usuario)
-        {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
+        //[HttpPost]
+        //public async Task<ActionResult<UsuarioViewModel>> Adicionar(UsuarioViewModel usuario)
+        //{
+        //    if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            await _service.Adicionar(_mapper.Map<Usuario>(usuario));
+        //    await _service.Adicionar(_mapper.Map<Usuario>(usuario));
 
-            return CustomResponse();
-        }
+        //    return CustomResponse();
+        //}
 
         [HttpPut("{id}")]
         public ActionResult Atualizar(int id, UsuarioViewModel usuarioViewModel)
