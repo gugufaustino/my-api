@@ -1,6 +1,8 @@
 ﻿using ApiApplication.ViewModel;
 using AutoMapper;
 using Business.Models;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ApiApplication.Configuration
 {
@@ -11,6 +13,8 @@ namespace ApiApplication.Configuration
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
             CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
+            CreateMap<Modelo, ModeloViewModel>();
+            CreateMap<ModeloViewModel, Modelo>().ForMember(prop => prop.ModeloTipoCasting, opt => opt.MapFrom<MyResolvers>());
 
             // DE -> PARA
             // Conta -> Model
@@ -38,14 +42,24 @@ namespace ApiApplication.Configuration
                 .ForPath(dest => dest.Conta.DescricaoFornecedor, opt => opt.MapFrom(src => src.DescricaoFornecedor))
                 .ForPath(dest => dest.Conta.TipoRecorrencia, opt => opt.MapFrom(src => src.TipoRecorrencia));
 
-
-
-            // 
             /*
               CreateMap<TipoRecorrenciaEnum, string>().ConvertUsing(src => src.ToString());
               CreateMap<Produto, ProdutoViewModel>()
                 .ForMember(dest => dest.NomeFornecedor, opt => opt.MapFrom(src => src.Fornecedor.Nome));
              */
+        }
+    }
+
+    public class MyResolvers : IValueResolver<ModeloViewModel, Modelo, IEnumerable<ModeloTipoCasting>>
+    {
+        public IEnumerable<ModeloTipoCasting> Resolve(ModeloViewModel source, Modelo target, IEnumerable<ModeloTipoCasting> destMember, ResolutionContext context)
+        {
+            var obj = new List<ModeloTipoCasting>();
+            foreach (var item in source.TipoCasting)
+            {
+                obj.Add(new ModeloTipoCasting { IdTipoCasting = (int)item });
+            }
+            return obj;
         }
     }
 }

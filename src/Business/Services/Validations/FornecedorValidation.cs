@@ -6,7 +6,7 @@ namespace Business.Services.Validations
 {
     public class FornecedorValidation : AbstractValidator<Fornecedor>
     {
-        IFornecedorRepository _repository;
+        readonly IFornecedorRepository _repository;
         public FornecedorValidation(IFornecedorRepository repository)
         {
             _repository = repository;

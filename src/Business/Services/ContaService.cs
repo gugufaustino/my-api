@@ -41,7 +41,7 @@ namespace Business.Services
         public async Task AdicionarPagamentoMensal(Pagamento pagamento, int diaVencimento)
         {
 
-            List<Pagamento> lstGerarPagamentos = new List<Pagamento>();
+            List<Pagamento> lstGerarPagamentos = new();
 
             int parcelasNoAno = 12 - DateTime.Now.Month;
             for (int i = 0; i < parcelasNoAno; i++)

@@ -25,6 +25,7 @@ namespace ApiApplication.Configuration
             services.AddScoped<IFornecedorService, FornecedorService>();
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IModeloService, ModeloService>();
 
             services.AddScoped<IValidator<Fornecedor>, FornecedorValidation>();
             
@@ -36,6 +37,7 @@ namespace ApiApplication.Configuration
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
+            services.AddScoped<IModeloRepository, ModeloRepository>();
 
 
 

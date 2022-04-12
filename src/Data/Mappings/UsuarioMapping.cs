@@ -25,7 +25,7 @@ namespace Data.Mappings
                 .HasColumnType("varchar(200)");
 
             builder.Property(p => p.Telefone)
-                    .HasColumnType("varchar(11)");
+                    .HasColumnType("varchar(15)");
 
             builder.Property(p => p.CPF)
                    .IsRequired()

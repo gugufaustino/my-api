@@ -4,14 +4,16 @@ using Data.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220411191344_Modelos")]
+    partial class Modelos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,7 +222,7 @@ namespace Data.Migrations
                     b.Property<int>("IdEndereco")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTipoSituacao")
+                    b.Property<int>("IdSituacao")
                         .HasColumnType("int");
 
                     b.Property<string>("Instagram")
@@ -262,11 +264,12 @@ namespace Data.Migrations
                     b.Property<int>("TipoCabeloComprimento")
                         .HasColumnType("int");
 
+                    b.Property<int>("TipoCasting")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdEndereco");
-
-                    b.HasIndex("IdTipoSituacao");
 
                     b.ToTable("Modelos");
                 });
@@ -298,45 +301,6 @@ namespace Data.Migrations
                     b.HasIndex("IdConta");
 
                     b.ToTable("Pagamentos");
-                });
-
-            modelBuilder.Entity("Business.Models.TipoCasting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ModeloId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NomeTipoCasting")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(250)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModeloId");
-
-                    b.ToTable("TipoCasting");
-                });
-
-            modelBuilder.Entity("Business.Models.TipoSituacao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("NomeTipoSituacao")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(250)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TipoSituacao");
                 });
 
             modelBuilder.Entity("Business.Models.Usuario", b =>
@@ -395,14 +359,7 @@ namespace Data.Migrations
                         .HasForeignKey("IdEndereco")
                         .IsRequired();
 
-                    b.HasOne("Business.Models.TipoSituacao", "TipoSituacao")
-                        .WithMany()
-                        .HasForeignKey("IdTipoSituacao")
-                        .IsRequired();
-
                     b.Navigation("Endereco");
-
-                    b.Navigation("TipoSituacao");
                 });
 
             modelBuilder.Entity("Business.Models.Pagamento", b =>
@@ -415,21 +372,9 @@ namespace Data.Migrations
                     b.Navigation("Conta");
                 });
 
-            modelBuilder.Entity("Business.Models.TipoCasting", b =>
-                {
-                    b.HasOne("Business.Models.Modelo", null)
-                        .WithMany("TipoCasting")
-                        .HasForeignKey("ModeloId");
-                });
-
             modelBuilder.Entity("Business.Models.Conta", b =>
                 {
                     b.Navigation("Pagamentos");
-                });
-
-            modelBuilder.Entity("Business.Models.Modelo", b =>
-                {
-                    b.Navigation("TipoCasting");
                 });
 #pragma warning restore 612, 618
         }

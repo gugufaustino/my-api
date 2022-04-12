@@ -18,6 +18,9 @@ namespace Data.Contexto
         public DbSet<Fornecedor> Fornecedores { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Modelo> Modelos { get; set; }
+        public DbSet<TipoSituacao> TipoSituacao { get; set; }
+        //public DbSet<ModeloTipoCasting> ModeloTipoCasting { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

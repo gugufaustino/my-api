@@ -56,7 +56,7 @@ namespace ApiApplication.Controllers
                     errors = _broadcaster.GetNotifications().Select(i => i.Message),
                     message = string.Empty,
                     success = false,
-                }); ;
+                });
             }
 
             return Ok(new
