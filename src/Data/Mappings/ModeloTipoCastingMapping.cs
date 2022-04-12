@@ -15,6 +15,11 @@ namespace Data.Mappings
 
 
             builder.ToTable("ModelosTipoCasting");
+
+            // N -> 1 (quando não é incluido navegation no  modelo principal(pk))
+            builder.HasOne(e => e.TipoCasting)
+                    .WithMany() //explicity no navegation property
+                    .HasForeignKey(i => i.IdTipoCasting);
         }
 
     }
