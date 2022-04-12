@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /doc/Exemplos/*
 /doc/tool/templates/api/Result
+/doc/tool/templates/angular/Result
