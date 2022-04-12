@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220411194304_Modelos3")]
-    partial class Modelos3
+    [Migration("20220412034010_top2")]
+    partial class top2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -184,16 +184,16 @@ namespace Data.Migrations
                     b.Property<int>("Altura")
                         .HasColumnType("int");
 
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(14)");
+
                     b.Property<int>("CorCabelo")
                         .HasColumnType("int");
 
                     b.Property<int>("CorOlhos")
                         .HasColumnType("int");
-
-                    b.Property<string>("Cpf")
-                        .IsRequired()
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(11)");
 
                     b.Property<string>("Diponibilidade")
                         .IsRequired()
@@ -256,7 +256,7 @@ namespace Data.Migrations
                     b.Property<string>("Telefone")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(11)");
+                        .HasColumnType("varchar(15)");
 
                     b.Property<int>("TipoCabelo")
                         .HasColumnType("int");
@@ -271,6 +271,26 @@ namespace Data.Migrations
                     b.HasIndex("IdTipoSituacao");
 
                     b.ToTable("Modelos");
+                });
+
+            modelBuilder.Entity("Business.Models.ModeloTipoCasting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("IdModelo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdTipoCasting")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdModelo");
+
+                    b.ToTable("ModelosTipoCasting");
                 });
 
             modelBuilder.Entity("Business.Models.Pagamento", b =>
@@ -302,37 +322,15 @@ namespace Data.Migrations
                     b.ToTable("Pagamentos");
                 });
 
-            modelBuilder.Entity("Business.Models.TipoCasting", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("ModeloId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NomeTipoCasting")
-                        .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ModeloId");
-
-                    b.ToTable("TipoCasting");
-                });
-
             modelBuilder.Entity("Business.Models.TipoSituacao", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
 
                     b.Property<string>("NomeTipoSituacao")
+                        .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("varchar(250)");
 
                     b.HasKey("Id");
 
@@ -371,7 +369,7 @@ namespace Data.Migrations
 
                     b.Property<string>("Telefone")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(11)");
+                        .HasColumnType("varchar(15)");
 
                     b.HasKey("Id");
 
@@ -405,6 +403,16 @@ namespace Data.Migrations
                     b.Navigation("TipoSituacao");
                 });
 
+            modelBuilder.Entity("Business.Models.ModeloTipoCasting", b =>
+                {
+                    b.HasOne("Business.Models.Modelo", "Modelo")
+                        .WithMany("ModeloTipoCasting")
+                        .HasForeignKey("IdModelo")
+                        .IsRequired();
+
+                    b.Navigation("Modelo");
+                });
+
             modelBuilder.Entity("Business.Models.Pagamento", b =>
                 {
                     b.HasOne("Business.Models.Conta", "Conta")
@@ -415,13 +423,6 @@ namespace Data.Migrations
                     b.Navigation("Conta");
                 });
 
-            modelBuilder.Entity("Business.Models.TipoCasting", b =>
-                {
-                    b.HasOne("Business.Models.Modelo", null)
-                        .WithMany("TipoCasting")
-                        .HasForeignKey("ModeloId");
-                });
-
             modelBuilder.Entity("Business.Models.Conta", b =>
                 {
                     b.Navigation("Pagamentos");
@@ -429,7 +430,7 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Business.Models.Modelo", b =>
                 {
-                    b.Navigation("TipoCasting");
+                    b.Navigation("ModeloTipoCasting");
                 });
 #pragma warning restore 612, 618
         }
