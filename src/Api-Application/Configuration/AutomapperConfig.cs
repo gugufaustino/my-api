@@ -3,7 +3,7 @@ using AutoMapper;
 using Business.Models;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Linq;
 namespace ApiApplication.Configuration
 {
     public class AutomapperConfig : Profile
@@ -13,7 +13,16 @@ namespace ApiApplication.Configuration
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
             CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
-            CreateMap<Modelo, ModeloViewModel>();
+            CreateMap<Modelo, ModeloViewModel>()
+                    .ForMember(prop => prop.NomeCorOlhos, opt => opt.MapFrom(src => src.CorOlhos.ToString()))
+                    .ForMember(prop => prop.NomeCorCabelo, opt => opt.MapFrom(src => src.CorCabelo.ToString()))
+                    .ForMember(prop => prop.NomeTipoCabelo, opt => opt.MapFrom(src => src.TipoCabelo.ToString()))
+                    .ForMember(prop => prop.NomeTipoCabeloComprimento, opt => opt.MapFrom(src => src.TipoCabeloComprimento.ToString()))
+                    .ForMember(prop => prop.NomeTipoCasting, opt => opt.MapFrom(
+                                                                                    src => src.ModeloTipoCasting
+                                                                                    .Select(i => i.TipoCasting.NomeTipoCasting).ToArray()
+                                                                                ));
+
             CreateMap<ModeloViewModel, Modelo>().ForMember(prop => prop.ModeloTipoCasting, opt => opt.MapFrom<MyResolvers>());
 
             // DE -> PARA

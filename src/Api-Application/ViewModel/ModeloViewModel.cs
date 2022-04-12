@@ -49,18 +49,23 @@ namespace ApiApplication.ViewModel
 
         [Required]
         public CorOlhosEnum CorOlhos { get; set; }
+        public string NomeCorOlhos { get; set; }
 
         [Required]
         public CorCabeloEnum CorCabelo { get; set; }
+        public string NomeCorCabelo { get; set; }
 
         [Required]
         public TipoCabeloEnum TipoCabelo { get; set; }
+        public string NomeTipoCabelo { get; set; }
 
         [Required]
         public TipoCabeloComprimentoEnum TipoCabeloComprimento { get; set; }
+        public string NomeTipoCabeloComprimento { get; set; }
 
         public EnderecoViewModel Endereco { get; set; }
         public IEnumerable<TipoCastingEnum> TipoCasting { get; set; }
+        public string[] NomeTipoCasting { get; set; }
 
     }
 }

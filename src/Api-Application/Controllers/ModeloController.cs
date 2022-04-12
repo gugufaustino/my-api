@@ -48,7 +48,7 @@ namespace ApiApplication.Controllers
         public async Task<IEnumerable<ModeloViewModel>> Listar()
         {
             var lista = await _repository.ListarTodos();
-            lista = lista.OrderBy(i => i.Nome).ToList();
+            //lista = lista.OrderBy(i => i.Nome).ToList();
             return _mapper.Map<IEnumerable<ModeloViewModel>>(lista);
         }
 

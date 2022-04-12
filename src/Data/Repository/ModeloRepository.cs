@@ -4,6 +4,7 @@ using Data.Contexto;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Data.Repository
 {
@@ -16,7 +17,9 @@ namespace Data.Repository
   
         public async override Task<List<Modelo>> ListarTodos()
         {
-            return await Db.Modelos.AsNoTracking()                            
+            return await Db.Modelos
+                            .Include(i=> i.ModeloTipoCasting).ThenInclude(s=> s.TipoCasting)
+                            .AsNoTracking()                            
                             .ToListAsync();
         }
 
