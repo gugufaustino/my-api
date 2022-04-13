@@ -45,7 +45,7 @@ namespace ApiApplication.Controllers
 
         [HttpGet]
         [ClaimsAuthorize(Permissao)]
-        public async Task<IEnumerable<ModeloViewModel>> Listar()
+        public async Task<IEnumerable<ModeloViewModel>> Listar([FromQuery] CatalogoFiltroViewModel model)
         {
             var lista = await _repository.ListarTodos();
             //lista = lista.OrderBy(i => i.Nome).ToList();
