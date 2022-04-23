@@ -8,7 +8,9 @@ using Business.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -48,7 +50,7 @@ namespace ApiApplication.Controllers
         public async Task<IEnumerable<ModeloViewModel>> Listar([FromQuery] CatalogoFiltroViewModel model)
         {
             var lista = await _repository.ListarTodos();
-            //lista = lista.OrderBy(i => i.Nome).ToList();
+            lista = lista.OrderBy(i => i.Nome).ToList();
             return _mapper.Map<IEnumerable<ModeloViewModel>>(lista);
         }
 
@@ -66,6 +68,13 @@ namespace ApiApplication.Controllers
         public async Task<ActionResult<ModeloViewModel>> Inserir(ModeloViewModel conta)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            var imagemNome = Guid.NewGuid() + "_" + conta.ImagemPerfilNome;
+            if (!UploadArquivo(conta.ImagemPerfilUpload, imagemNome))
+            {
+                return CustomResponse(conta);
+            }
+
 
             var entity = _mapper.Map<Modelo>(conta);
             await _service.Adicionar(entity);
@@ -92,6 +101,29 @@ namespace ApiApplication.Controllers
             await _service.Excluir(id);
 
             return CustomResponse();
+        }
+
+        private bool UploadArquivo(string arquivo, string imgNome)
+        {
+            if (string.IsNullOrEmpty(arquivo))
+            {
+                ToTransmit("Forneça uma imagem!");
+                return false;
+            }
+
+            var imageDataByteArray = System.Convert.FromBase64String(arquivo);
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\images\profile", imgNome);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                ToTransmit("Já existe um arquivo com este nome!");
+                return false;
+            }
+
+            System.IO.File.WriteAllBytes(filePath, imageDataByteArray);
+
+            return true;
         }
 
 

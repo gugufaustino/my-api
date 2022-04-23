@@ -74,6 +74,12 @@ namespace Data.Mappings
                 .IsRequired();
 
 
+            builder.Property(p => p.FotoPerfilUrl)
+                .IsRequired()
+                .HasColumnType("varchar(250)");
+
+            builder.Property(p => p.ImagemPerfilNome).HasColumnType("varchar(250)");
+
             builder.ToTable("Modelos");
 
             // 1 : N =>
