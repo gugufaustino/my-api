@@ -66,6 +66,9 @@ namespace ApiApplication.ViewModel
         public EnderecoViewModel Endereco { get; set; }
         public IEnumerable<TipoCastingEnum> TipoCasting { get; set; }
         public string[] NomeTipoCasting { get; set; }
+        
+        public string ImagemPerfilNome { get; set; }
+        public string ImagemPerfilUpload { get; set; }
 
     }
 }

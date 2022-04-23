@@ -2,6 +2,11 @@
 CATALOGO
  CRUD - MODELOS. Básicos, endereço, características 
 
+CONTROLE::::
+DATA DO CADASTRO: ____/____/____ 
+ATUALIZAÇÃO: ____/____/____ 
+SITUAÇÃO: 
+ 
 DADOS PESSOAIS::::::
 NOME: 
 DATA DE NASCIMENTO______IDADE:_____  
@@ -13,11 +18,29 @@ CASTING: Comercial ( ) Eventos ( ) Fashion ( ) Fashion Comercial ( ) Ator/Atriz 
 CONTATO:::::::::::
 FONES:
 E-MAIL: 
+ 
+REDES SOCIAIS:::::
+insta, face, ....
 
 ENDEREÇO::::::::::
 Logradouro:
 CIDADE:  			CEP:
+ 
+ 
+CARACTERISTICAS FISICAS::::::::::::::
+Altura:       Peso:        - Manequim:     - Sapato:
+•	Cor dos OLHOS:          Azul (  ) Verde (  ) Castanho claro (  ) Castanho escuro (  ) Preto (   )  
+•	COR DO CABELO:          Preto (  )     Castanho claro (  )      Castanho escuro ( )     Grisalho (  )    Loiro claro (  ) Loiro escuro  (  )       Ruivo (  )       Mechas (  )       Colorido (   )
+•	TIPO DE CABELO:         Cacheado (  )        Liso (  )     Ondulado (  )      Crespo (  ) 
+•	COMPRIMENTO DO CABELO:  Raspado (  )    Curto (  )     Médio (  )     Longo (  )     Muito longo (  ) 
+    
+    TIPO DE PELE: ___________
+•	MEDIDAS (MASCULINO): Tórax:_____cm Camisa:________ Terno:________  
+•	MEDIDAS (FEMININO): Quadril:       Busto:      Cintura:
+•	OUTROS: Cicatrizes:________________ Piercing:_______ Tatuagem:________ 
 
+
+=======>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 FORMAÇÃO:::::::::
 ESCOLARIDADE			 IDIOMAS: 
 INFORMAÇÕES ADICIONAIS:___________________________________________________________________________________ 
@@ -28,25 +51,8 @@ CONTA BANCÁRIA ::::::::
 Nome do titular: ______________________________________________________  
 Banco: __________________________Tipo de Conta: _______________________  
 Agência: ___________________________ Nº da Conta: _______________________ 
- 
-CONTROLE::::
-DATA DO CADASTRO: ____/____/____  -   ATUALIZAÇÃO: ____/____/____ 
- 
-REDES SOCIAIS:::::
-insta, face, ....
-
-
-CARACTERISTICAS FISICAS::::::::::::::
-Altura:       Peso:        - Manequim:     - Sapato:
- 
-•	OLHOS: Azul (  ) Verde (  ) Castanho claro (  ) Castanho escuro (  ) Preto (   )  
-•	COR DO CABELO: Preto (  )     Castanho claro (  )      Castanho escuro ( )     Grisalho (  )    Loiro claro (  ) Loiro escuro  (  )       Ruivo (  )       Mechas (  )       Colorido (   )
-•	COMPRIMENTO DO CABELO: Raspado (  )    Curto (  )     Médio (  )     Longo (  )     Muito longo (  ) 
-•	TIPO DE CABELO: Cacheado (  )        Liso (  )     Ondulado (  )      Crespo (  ) 
-•	TIPO DE PELE: ___________
-•	MEDIDAS (MASCULINO): Tórax:_____cm Camisa:________ Terno:________  
-•	MEDIDAS (FEMININO): Quadril:       Busto:      Cintura:
-•	OUTROS: Cicatrizes:________________ Piercing:_______ Tatuagem:________ 
 
  
+
+
  

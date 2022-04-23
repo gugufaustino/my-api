@@ -26,7 +26,7 @@ namespace ApiApplication.Configuration
             services.AddHealthChecks()
                     .AddCheck<CustomHealthChecks>("API")
                     .AddSqlServer(configuration.GetConnectionString("DefaultConnection"), name: "SQL Server")
-                    .AddDbContextCheck<AppDbContext>($"{nameof(AppDbContext)}(EF DbContext)", customTestQuery: CustomTestQueryAsync)
+                    .AddDbContextCheck<AppDbContext>($"{nameof(AppDbContext)}(EF DbContext)", customTestQuery: EfMigrationsCheck)
                     .AddDbContextCheck<ApplicationDbContext>($"{nameof(ApplicationDbContext)}(EF IdentityDbContext)");
 
         }
@@ -45,7 +45,7 @@ namespace ApiApplication.Configuration
             });
         }
 
-        public static async Task<bool> CustomTestQueryAsync(AppDbContext context, CancellationToken cancellationToken = default)
+        public static async Task<bool> EfMigrationsCheck(AppDbContext context, CancellationToken cancellationToken = default)
         {
             var lstMigr = context.Database.GetPendingMigrations();
             if (lstMigr.Any())
