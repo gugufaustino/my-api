@@ -12,19 +12,19 @@ namespace Data.Mappings
 
             builder.Property(p => p.Nome)
                 .IsRequired()
-                .HasColumnType("varchar(250)"); 
-            
+                .HasColumnType("varchar(250)");
+
             builder.Property(p => p.DtNascimento)
                 .IsRequired()
                 .HasColumnType("date");
 
             builder.Property(p => p.Rg)
                 .HasColumnType("varchar(50)");
-            
+
             builder.Property(p => p.CPF)
                 .IsRequired()
                 .HasColumnType("varchar(14)");
-            
+
             builder.Property(p => p.Diponibilidade)
                 .IsRequired()
                 .HasColumnType("varchar(250)");
@@ -67,18 +67,15 @@ namespace Data.Mappings
                 .IsRequired();
             builder.Property(p => p.TipoCabeloComprimento)
                 .IsRequired();
-            
+
             builder.Property(p => p.DthInclusao)
-                .IsRequired();            
+                .IsRequired();
             builder.Property(p => p.DthAtualizacao)
                 .IsRequired();
 
-
-            builder.Property(p => p.FotoPerfilUrl)
-                .IsRequired()
-                .HasColumnType("varchar(250)");
-
-            builder.Property(p => p.ImagemPerfilNome).HasColumnType("varchar(250)");
+            builder.Property(p => p.ImagemPerfilNome)
+                    .IsRequired()
+                    .HasColumnType("varchar(250)");
 
             builder.ToTable("Modelos");
 

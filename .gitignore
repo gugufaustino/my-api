@@ -364,4 +364,4 @@ FodyWeavers.xsd
 /doc/Exemplos/*
 /doc/tool/templates/api/Result
 /doc/tool/templates/angular/Result
-/src/Api-Application/wwwroot/images/profile
+/src/Api-Application/wwwroot/images/profile/*.jpg

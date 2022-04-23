@@ -8,7 +8,6 @@ namespace Business.Models
         public int IdEndereco { get; set; }
         public TipoSituacaoEnum IdTipoSituacao { get; set; }
         public string Nome { get; set; }
-        public string FotoPerfilUrl { get; set; }
         public DateTime DtNascimento { get; set; }
         public string Rg { get; set; }
         public string CPF { get; set; }
