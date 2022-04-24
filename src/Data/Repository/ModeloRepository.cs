@@ -27,10 +27,12 @@ namespace Data.Repository
 
             if (!filter.Nome.IsNullOrEmpty()) query = query.Where(w => w.Nome.StartsWith(filter.Nome));
             if (filter.IdadeDe.HasValue) query = query.Where(w => w.DtNascimento <= DateTime.Now.AddYears(-filter.IdadeDe.Value).Date);
-            if (filter.IdadeAte.HasValue) query = query.Where(w => w.DtNascimento >= DateTime.Now.AddYears(-filter.IdadeAte.Value-1).Date);
+            if (filter.IdadeAte.HasValue) query = query.Where(w => w.DtNascimento >= DateTime.Now.AddYears(-filter.IdadeAte.Value - 1).Date);
             if (filter.AlturaDe.HasValue) query = query.Where(w => w.Altura >= filter.AlturaDe);
             if (filter.AlturaAte.HasValue) query = query.Where(w => w.Altura <= filter.AlturaAte);
-            
+            if (filter.PesoDe.HasValue) query = query.Where(w => w.Peso >= filter.PesoDe);
+            if (filter.PesoAte.HasValue) query = query.Where(w => w.Peso <= filter.PesoAte);
+
             if (filter.TipoCasting != null && filter.TipoCasting.Any())
                 query = query.Where(w => w.ModeloTipoCasting.Any(m => filter.TipoCasting.Contains((TipoCastingEnum)m.IdTipoCasting)));
 
