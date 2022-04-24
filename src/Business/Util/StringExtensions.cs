@@ -8,5 +8,11 @@ namespace Business.Util
         {
             return str != null ? Regex.Replace(str, @"[^\d]", string.Empty) : str;
         }
+
+
+        public static bool IsNullOrEmpty(this string str)
+        {
+            return string.IsNullOrEmpty(str);
+        }
     }
 }

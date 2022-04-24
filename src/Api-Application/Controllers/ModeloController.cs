@@ -5,6 +5,7 @@ using Business.Interface;
 using Business.Interface.Repository;
 using Business.Interface.Services;
 using Business.Models;
+using Business.Models.Filters;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,7 @@ namespace ApiApplication.Controllers
         private readonly IModeloService _service;
         private readonly IModeloRepository _repository;
 
-        public ModeloController(ILogger<ContaController> logger,                              
+        public ModeloController(ILogger<ContaController> logger,
                                IMapper mapper,
                                IBroadcaster broadcaster,
                                IModeloService service,
@@ -47,9 +48,9 @@ namespace ApiApplication.Controllers
 
         [HttpGet]
         [ClaimsAuthorize(Permissao)]
-        public async Task<IEnumerable<ModeloViewModel>> Listar([FromQuery] CatalogoFiltroViewModel model)
+        public async Task<IEnumerable<ModeloViewModel>> Listar([FromQuery] CatalogoModeloFilter filtro)
         {
-            var lista = await _repository.ListarTodos();
+            var lista = await _repository.Pesquisar(filtro);
             lista = lista.OrderBy(i => i.Nome).ToList();
             return _mapper.Map<IEnumerable<ModeloViewModel>>(lista);
         }
@@ -62,19 +63,15 @@ namespace ApiApplication.Controllers
 
             return _mapper.Map<ModeloViewModel>(modelo);
         }
-        
+
         [HttpPost]
         [ClaimsAuthorize(Permissao)]
         public async Task<ActionResult<ModeloViewModel>> Inserir(ModeloViewModel conta)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            var imagemNome = Guid.NewGuid() + "_" + conta.ImagemPerfilNome;
-            if (!UploadArquivo(conta.ImagemPerfilUpload, imagemNome))
-            {
+            if (!UploadArquivo(conta.ImagemPerfilUpload, conta.ImagemPerfilNome = Guid.NewGuid() + "_" + conta.ImagemPerfilNome))
                 return CustomResponse(conta);
-            }
-
 
             var entity = _mapper.Map<Modelo>(conta);
             await _service.Adicionar(entity);
