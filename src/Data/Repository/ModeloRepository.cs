@@ -43,6 +43,8 @@ namespace Data.Repository
         public async override Task<Modelo> ObterPorId(int id)
         {
             return await Db.Modelos
+                            .Include(i=> i.Endereco)
+                            .Include(i => i.ModeloTipoCasting).ThenInclude(s => s.TipoCasting)
                             .FirstAsync(i => i.Id == id);
         }
     }
