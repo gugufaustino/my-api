@@ -48,11 +48,11 @@ namespace ApiApplication.Controllers
 
         [HttpGet]
         [ClaimsAuthorize(Permissao)]
-        public async Task<IEnumerable<ModeloViewModel>> Listar([FromQuery] CatalogoModeloFilter filtro)
+        public async Task<IEnumerable<CatalogoViewModel>> Listar([FromQuery] CatalogoModeloFilter filtro)
         {
             var lista = await _repository.Pesquisar(filtro);
             lista = lista.OrderBy(i => i.Nome).ToList();
-            return _mapper.Map<IEnumerable<ModeloViewModel>>(lista);
+            return _mapper.Map<IEnumerable<CatalogoViewModel>>(lista);
         }
 
         [HttpGet("{id:int}")]
@@ -66,14 +66,14 @@ namespace ApiApplication.Controllers
 
         [HttpPost]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<ModeloViewModel>> Inserir(ModeloViewModel conta)
+        public async Task<ActionResult<ModeloViewModel>> Inserir(ModeloViewModel model)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-            if (!UploadArquivo(conta.ImagemPerfilUpload, conta.ImagemPerfilNome = Guid.NewGuid() + "_" + conta.ImagemPerfilNome))
-                return CustomResponse(conta);
+            if (!UploadArquivo(model.ImagemPerfilUpload, model.ImagemPerfilNome = Guid.NewGuid() + "_" + model.ImagemPerfilNome))
+                return CustomResponse(model);
 
-            var entity = _mapper.Map<Modelo>(conta);
+            var entity = _mapper.Map<Modelo>(model);
             await _service.Adicionar(entity);
 
             return CustomResponse();
@@ -84,6 +84,9 @@ namespace ApiApplication.Controllers
         public async Task<ActionResult<ModeloViewModel>> Editar(int id, ModeloViewModel model)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            if (!string.IsNullOrEmpty(model.ImagemPerfilUpload) && !UploadArquivo(model.ImagemPerfilUpload, model.ImagemPerfilNome = Guid.NewGuid() + "_" + model.ImagemPerfilNome))
+                return CustomResponse(model);
 
             var entity = _mapper.Map<Modelo>(model);
             await _service.Editar(id, entity);

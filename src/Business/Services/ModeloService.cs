@@ -42,8 +42,27 @@ namespace Business.Services
         public async Task Editar(int Id, Modelo modelo)
         {
             var entity = await _repository.ObterPorId(Id);
-
-
+            entity.Nome = modelo.Nome;
+            entity.DtNascimento = modelo.DtNascimento;
+            entity.Rg = modelo.Rg;
+            entity.CPF = modelo.CPF;
+            entity.Diponibilidade = modelo.Diponibilidade;
+            entity.Email = modelo.Email;
+            entity.Telefone = modelo.Telefone;
+            entity.Instagram = modelo.Instagram;
+            entity.Facebook = modelo.Facebook;
+            entity.Linkedin = modelo.Linkedin;
+            entity.Altura = modelo.Altura;
+            entity.Peso = modelo.Peso;
+            entity.Manequim = modelo.Manequim;
+            entity.Sapato = modelo.Sapato;
+            entity.CorOlhos = modelo.CorOlhos;
+            entity.CorCabelo = modelo.CorCabelo;
+            entity.TipoCabelo = modelo.TipoCabelo;
+            entity.TipoCabeloComprimento = modelo.TipoCabeloComprimento;
+       //     entity.ModeloTipoCasting = modelo.ModeloTipoCasting;
+            entity.ImagemPerfilNome = modelo.ImagemPerfilNome;
+            
             await _repository.Editar(entity);
         }
 

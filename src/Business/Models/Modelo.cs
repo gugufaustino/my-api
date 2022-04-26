@@ -80,10 +80,10 @@ namespace Business.Models
 
     public enum TipoCabeloComprimentoEnum
     {
-        Raspado=1,
-        Curto=2,
-        Medio=3,
-        Longo=4,
-        MuitoLongo=5
+        Raspado = 1,
+        Curto = 2,
+        Medio = 3,
+        Longo = 4,
+        MuitoLongo = 5
     }
 }

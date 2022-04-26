@@ -13,7 +13,7 @@ namespace ApiApplication.Configuration
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
             CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
-            CreateMap<Modelo, ModeloViewModel>()
+            CreateMap<Modelo, CatalogoViewModel>()
                     .ForMember(prop => prop.NomeCorOlhos, opt => opt.MapFrom(src => src.CorOlhos.ToString()))
                     .ForMember(prop => prop.NomeCorCabelo, opt => opt.MapFrom(src => src.CorCabelo.ToString()))
                     .ForMember(prop => prop.NomeTipoCabelo, opt => opt.MapFrom(src => src.TipoCabelo.ToString()))
@@ -23,7 +23,14 @@ namespace ApiApplication.Configuration
                                                                                     .Select(i => i.TipoCasting.NomeTipoCasting).ToArray()
                                                                                 ));
 
-            CreateMap<ModeloViewModel, Modelo>().ForMember(prop => prop.ModeloTipoCasting, opt => opt.MapFrom<MyResolvers>());
+            CreateMap<Modelo, ModeloViewModel>()                    
+                    .ForMember(prop => prop.NomeTipoSituacao, opt => opt.MapFrom(src => src.TipoSituacao.NomeTipoSituacao))
+                    .ForMember(prop => prop.ModeloTipoCasting, opt => opt.MapFrom(src => src.ModeloTipoCasting
+                                                                                   .Select(i => i.IdTipoCasting)
+                                                                                ));
+
+
+            CreateMap<ModeloViewModel, Modelo>().ForMember(prop => prop.ModeloTipoCasting, opt => opt.MapFrom<ModeloTipoCastingResolver>());
 
             // DE -> PARA
             // Conta -> Model
@@ -59,12 +66,12 @@ namespace ApiApplication.Configuration
         }
     }
 
-    public class MyResolvers : IValueResolver<ModeloViewModel, Modelo, IEnumerable<ModeloTipoCasting>>
+    public class ModeloTipoCastingResolver : IValueResolver<ModeloViewModel, Modelo, IEnumerable<ModeloTipoCasting>>
     {
         public IEnumerable<ModeloTipoCasting> Resolve(ModeloViewModel source, Modelo target, IEnumerable<ModeloTipoCasting> destMember, ResolutionContext context)
         {
             var obj = new List<ModeloTipoCasting>();
-            foreach (var item in source.TipoCasting)
+            foreach (var item in source.ModeloTipoCasting)
             {
                 obj.Add(new ModeloTipoCasting { IdTipoCasting = (int)item });
             }

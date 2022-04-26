@@ -22,6 +22,7 @@ namespace Data.Repository
         public async Task<List<Modelo>> Pesquisar(CatalogoModeloFilter filter)
         {
             IQueryable<Modelo> query = Db.Modelos
+                                            .Include(i => i.TipoSituacao)
                                             .Include(i => i.ModeloTipoCasting).ThenInclude(s => s.TipoCasting)
                                             .AsNoTracking();
 
@@ -44,6 +45,7 @@ namespace Data.Repository
         {
             return await Db.Modelos
                             .Include(i=> i.Endereco)
+                            .Include(i=> i.TipoSituacao)
                             .Include(i => i.ModeloTipoCasting).ThenInclude(s => s.TipoCasting)
                             .FirstAsync(i => i.Id == id);
         }
