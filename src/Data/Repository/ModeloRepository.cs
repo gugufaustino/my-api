@@ -49,5 +49,17 @@ namespace Data.Repository
                             .Include(i => i.ModeloTipoCasting).ThenInclude(s => s.TipoCasting)
                             .FirstAsync(i => i.Id == id);
         }
+
+        public async Task<int> RemoverModeloTipoCasting(IEnumerable<ModeloTipoCasting> modeloTipoCastings)
+        {
+            Db.ModeloTipoCasting.RemoveRange(modeloTipoCastings);
+            return await SaveChanges();
+        }
+
+        public async Task AdicionarModeloTipoCasting(IEnumerable<ModeloTipoCasting> novosModeloTipoCastings)
+        {
+            Db.ModeloTipoCasting.AddRange(novosModeloTipoCastings);
+            await SaveChanges();
+        }
     }
 }

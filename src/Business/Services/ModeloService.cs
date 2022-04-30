@@ -5,6 +5,7 @@ using Business.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Business.Services
 {
@@ -25,8 +26,9 @@ namespace Business.Services
 
         public async Task Adicionar(Modelo modelo)
         {
-            modelo.DthAtualizacao = modelo.DthInclusao = DateTime.Now;
-            modelo.IdTipoSituacao = TipoSituacaoEnum.EmElaboracao;
+            modelo.DthInclusao = DateTime.Now;
+            modelo.DthAtualizacao = DateTime.Now;
+            modelo.IdTipoSituacao = TipoSituacaoEnum.Ativado;
             await _enderecoService.Adicionar(modelo.Endereco);
             await _repository.Adicionar(modelo);
         }
@@ -35,13 +37,14 @@ namespace Business.Services
         {
             foreach (var modelo in lstGerarModelos)
             {
-                await _repository.Adicionar(modelo);
+                await Adicionar(modelo);
             }
         }
 
         public async Task Editar(int Id, Modelo modelo)
         {
             var entity = await _repository.ObterPorId(Id);
+            entity.DthAtualizacao = DateTime.Now;
             entity.Nome = modelo.Nome;
             entity.DtNascimento = modelo.DtNascimento;
             entity.Rg = modelo.Rg;
@@ -60,10 +63,26 @@ namespace Business.Services
             entity.CorCabelo = modelo.CorCabelo;
             entity.TipoCabelo = modelo.TipoCabelo;
             entity.TipoCabeloComprimento = modelo.TipoCabeloComprimento;
-       //     entity.ModeloTipoCasting = modelo.ModeloTipoCasting;
             entity.ImagemPerfilNome = modelo.ImagemPerfilNome;
+
+            //modelo.IdEndereco = entity.IdEndereco;
+            await _enderecoService.Editar(entity.IdEndereco, modelo.Endereco);
+            await EditarModeloTipoCasting(entity, entity.ModeloTipoCasting, modelo.ModeloTipoCasting.Select(i => (TipoCastingEnum)i.IdTipoCasting));
             
             await _repository.Editar(entity);
+        }
+
+        private async Task EditarModeloTipoCasting(Modelo entity, IEnumerable<ModeloTipoCasting> modeloTipoCastings, IEnumerable<TipoCastingEnum> novosTipoCastingEnums)
+        {
+            await _repository.RemoverModeloTipoCasting(modeloTipoCastings);
+
+            var novosModeloTipoCastings = novosTipoCastingEnums.Select(i => new ModeloTipoCasting {
+                 Modelo = entity,
+                 IdTipoCasting = (int)i
+            });
+            
+            await _repository.AdicionarModeloTipoCasting(novosModeloTipoCastings);
+
         }
 
 

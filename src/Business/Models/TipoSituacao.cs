@@ -14,6 +14,7 @@ namespace Business.Models
 
     public enum TipoSituacaoEnum
     {
-        EmElaboracao = 1    
+        EmElaboracao = 0,    
+        Ativado = 1    
     }
 }
