@@ -73,6 +73,14 @@ namespace Data.Mappings
             builder.Property(p => p.DthAtualizacao)
                 .IsRequired();
 
+            builder.Property(p => p.UsuarioInclusao)
+                .IsRequired()
+                .HasColumnType("varchar(250)"); 
+
+            builder.Property(p => p.UsuarioAtualizacao)
+                .IsRequired()
+                .HasColumnType("varchar(250)");
+
             builder.Property(p => p.ImagemPerfilNome)
                     .IsRequired()
                     .HasColumnType("varchar(250)");

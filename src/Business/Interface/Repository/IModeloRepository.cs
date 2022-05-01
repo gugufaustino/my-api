@@ -9,6 +9,6 @@ namespace Business.Interface.Repository
     {
         Task<List<Modelo>> Pesquisar(CatalogoModeloFilter filtro);
         Task<int> RemoverModeloTipoCasting(IEnumerable<ModeloTipoCasting> modeloTipoCastings);
-        Task AdicionarModeloTipoCasting(IEnumerable<ModeloTipoCasting> novosModeloTipoCastings);
+        Task<int> AdicionarModeloTipoCasting(IEnumerable<ModeloTipoCasting> novosModeloTipoCastings);
     }
 }

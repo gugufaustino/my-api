@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.Models
 {
-    public class ModeloTipoCasting : Entity
+    public class ModeloTipoCasting : EntityKey
     {
         public int IdTipoCasting { get; set; }
         public int IdModelo { get; set; }

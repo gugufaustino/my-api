@@ -7,13 +7,13 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Business.Interface;
 
 namespace Data.Repository
 {
     public class EnderecoRepository : Repository<Endereco>, IEnderecoRepository
     {
-        public EnderecoRepository(AppDbContext appDbContext)
-            : base(appDbContext)
+        public EnderecoRepository(AppDbContext appDbContext, IUser user)  : base(appDbContext, user)
         {
         }
   

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Business.Models
 {
-    public class Conta : Entity
+    public class Conta : EntityKey
     {
         public string DescricaoFornecedor { get; set; }
         public TipoContaEnum TipoConta { get; set; }

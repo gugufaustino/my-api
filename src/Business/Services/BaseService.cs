@@ -19,7 +19,7 @@ namespace Business.Services
         }
         protected bool ExecuteValidations<TV,TM>(TV validation, TM model)
             where TV : IValidator<TM> 
-            where TM : Entity 
+            where TM : EntityKey 
         {
           var result =  validation.Validate(model);
             if (result.IsValid) return true;

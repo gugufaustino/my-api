@@ -26,8 +26,6 @@ namespace Business.Services
 
         public async Task Adicionar(Modelo modelo)
         {
-            modelo.DthInclusao = DateTime.Now;
-            modelo.DthAtualizacao = DateTime.Now;
             modelo.IdTipoSituacao = TipoSituacaoEnum.Ativado;
             await _enderecoService.Adicionar(modelo.Endereco);
             await _repository.Adicionar(modelo);
@@ -44,7 +42,6 @@ namespace Business.Services
         public async Task Editar(int Id, Modelo modelo)
         {
             var entity = await _repository.ObterPorId(Id);
-            entity.DthAtualizacao = DateTime.Now;
             entity.Nome = modelo.Nome;
             entity.DtNascimento = modelo.DtNascimento;
             entity.Rg = modelo.Rg;
@@ -65,7 +62,6 @@ namespace Business.Services
             entity.TipoCabeloComprimento = modelo.TipoCabeloComprimento;
             entity.ImagemPerfilNome = modelo.ImagemPerfilNome;
 
-            //modelo.IdEndereco = entity.IdEndereco;
             await _enderecoService.Editar(entity.IdEndereco, modelo.Endereco);
             await EditarModeloTipoCasting(entity, entity.ModeloTipoCasting, modelo.ModeloTipoCasting.Select(i => (TipoCastingEnum)i.IdTipoCasting));
             

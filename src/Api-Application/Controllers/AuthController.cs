@@ -137,6 +137,7 @@ namespace ApiApplication.Controllers
             var claimsUserToken = new List<Claim>(claims);
 
             //claims usadas pelo Identity não precisam ficar abertas no userToken
+            claims.Add(new Claim(ClaimTypes.Name, usuario.Nome));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, identityUser.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, identityUser.Id));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Business.Models
 {
-    public class Usuario : Entity
+    public class Usuario : EntityKey
     {
         public string Nome { get; set; }
         public string Apelido { get; set; }

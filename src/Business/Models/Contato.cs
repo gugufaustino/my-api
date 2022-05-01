@@ -2,7 +2,7 @@
 
 namespace Business.Models
 {
-    public class Contato : Entity
+    public class Contato : EntityKey
     {
         public string Nome { get; set; }       
         public string Telefone { get; set; }       

@@ -2,7 +2,7 @@
 
 namespace Business.Models
 {
-    public class Fornecedor : Entity
+    public class Fornecedor : EntityKey
     {
         public int IdEndereco { get; set; }
         public string RazaoSocial { get; set; }       

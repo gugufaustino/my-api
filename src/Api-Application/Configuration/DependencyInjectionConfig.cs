@@ -1,4 +1,5 @@
-﻿using Business.Interface;
+﻿using Business.Identity;
+using Business.Interface;
 using Business.Interface.Repository;
 using Business.Interface.Services;
 using Business.Models;
@@ -38,6 +39,8 @@ namespace ApiApplication.Configuration
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IModeloRepository, ModeloRepository>();
+            
+            services.AddScoped<IUser, User>();
 
 
 

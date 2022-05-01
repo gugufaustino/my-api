@@ -7,13 +7,13 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Business.Interface;
 
 namespace Data.Repository
 {
     public class PagamentoRepository : Repository<Pagamento>, IPagamentoRepository
     {
-        public PagamentoRepository(AppDbContext appDbContext)
-            : base(appDbContext)
+        public PagamentoRepository(AppDbContext appDbContext, IUser user) : base(appDbContext, user)
         {
         }
 

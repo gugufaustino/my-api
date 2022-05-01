@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Business.Models
 {
-    public class Modelo : Entity
+    public class Modelo : EntityDateKey
     {
         public int IdEndereco { get; set; }
         public TipoSituacaoEnum IdTipoSituacao { get; set; }
@@ -28,9 +28,6 @@ namespace Business.Models
         public CorCabeloEnum CorCabelo { get; set; }
         public TipoCabeloEnum TipoCabelo { get; set; }
         public TipoCabeloComprimentoEnum TipoCabeloComprimento { get; set; }
-
-        public DateTime DthInclusao { get; set; }
-        public DateTime DthAtualizacao { get; set; }
 
         public Endereco Endereco { get; set; }
         public TipoSituacao TipoSituacao { get; set; }

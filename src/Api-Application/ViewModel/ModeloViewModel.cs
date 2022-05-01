@@ -11,6 +11,9 @@ namespace ApiApplication.ViewModel
         public TipoSituacaoEnum IdTipoSituacao { get; set; }
         public string NomeTipoSituacao { get; set; }
 
+
+        public string UsuarioInclusao { get; set; }
+        public string UsuarioAtualizacao { get; set; }
         public DateTime? DthInclusao { get; set; }
         public DateTime? DthAtualizacao { get; set; }
 

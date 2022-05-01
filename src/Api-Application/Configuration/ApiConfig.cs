@@ -19,7 +19,7 @@ namespace ApiApplication.Configuration
             var corsOrigins = appSettingsSection.Get<AppSettings>().CorsOrigins;
 
             services.AddControllers();
-
+             services.AddHttpContextAccessor();
             services.Configure<ApiBehaviorOptions>(option =>
             {
                 option.SuppressModelStateInvalidFilter = true;

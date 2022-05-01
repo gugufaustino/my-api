@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.Models
+namespace Business.Interface.Models
 {
-    public class TipoCasting : EntityKey
+    public interface IEntityKey
     {
-        public string NomeTipoCasting { get; set; }
+        int Id { get; set; }
     }
-  
 }

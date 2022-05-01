@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.Models
 {
-    public class TipoSituacao :Entity
+    public class TipoSituacao :EntityKey
     {
         public new TipoSituacaoEnum Id { get; set; }
         public string NomeTipoSituacao { get; set; }

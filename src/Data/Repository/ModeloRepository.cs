@@ -9,13 +9,13 @@ using Business.Models.Filters;
 using System.Linq.Expressions;
 using Business.Util;
 using System;
+using Business.Interface;
 
 namespace Data.Repository
 {
     public class ModeloRepository : Repository<Modelo>, IModeloRepository
     {
-        public ModeloRepository(AppDbContext appDbContext)
-            : base(appDbContext)
+        public ModeloRepository(AppDbContext appDbContext, IUser user) : base(appDbContext, user)
         {
         }
 
@@ -44,8 +44,8 @@ namespace Data.Repository
         public async override Task<Modelo> ObterPorId(int id)
         {
             return await Db.Modelos
-                            .Include(i=> i.Endereco)
-                            .Include(i=> i.TipoSituacao)
+                            .Include(i => i.Endereco)
+                            .Include(i => i.TipoSituacao)
                             .Include(i => i.ModeloTipoCasting).ThenInclude(s => s.TipoCasting)
                             .FirstAsync(i => i.Id == id);
         }
@@ -56,10 +56,10 @@ namespace Data.Repository
             return await SaveChanges();
         }
 
-        public async Task AdicionarModeloTipoCasting(IEnumerable<ModeloTipoCasting> novosModeloTipoCastings)
+        public async Task<int> AdicionarModeloTipoCasting(IEnumerable<ModeloTipoCasting> novosModeloTipoCastings)
         {
             Db.ModeloTipoCasting.AddRange(novosModeloTipoCastings);
-            await SaveChanges();
+            return await SaveChanges();
         }
     }
 }

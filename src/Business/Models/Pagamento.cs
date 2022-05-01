@@ -2,7 +2,7 @@
 
 namespace Business.Models
 {
-    public class Pagamento : Entity
+    public class Pagamento : EntityKey
     {
         public int IdConta { get; set; }
         public decimal Valor { get; set; }

@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using Business.Interface.Models;
+using Business.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace Business.Interface.Repository
 {
     public interface IRepository<TEntity> : IDisposable
-        where TEntity : Entity
+        where TEntity : IEntityKey
     {
         Task<TEntity> ObterPorId(int id);
         Task<TEntity> Obter(Expression<Func<TEntity, bool>> predicate);

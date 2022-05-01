@@ -1,4 +1,5 @@
-﻿using Business.Interface.Repository;
+﻿using Business.Interface;
+using Business.Interface.Repository;
 using Business.Models;
 using Data.Contexto;
 using System;
@@ -9,8 +10,7 @@ namespace Data.Repository
 {
     public class ContaRepository : Repository<Conta>, IContaRepository
     {
-        public ContaRepository(AppDbContext appDbContext) 
-            : base (appDbContext)
+        public ContaRepository(AppDbContext appDbContext, IUser user) : base(appDbContext, user)
         {
 
         }

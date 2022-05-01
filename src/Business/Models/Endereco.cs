@@ -2,7 +2,7 @@
 
 namespace Business.Models
 {
-    public class Endereco : Entity
+    public class Endereco : EntityKey
     {
 		public string Cep { get; set; }
 
