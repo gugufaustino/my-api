@@ -53,6 +53,13 @@ namespace Data.Contexto
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
             }
 
+
+            //#region Seed
+            //modelBuilder.Entity<TipoSituacao>().HasData(new TipoSituacao { Id = TipoSituacaoEnum.EmElaboracao,  NomeTipoSituacao = TipoSituacaoEnum.EmElaboracao.ToString() });
+            //modelBuilder.Entity<TipoSituacao>().HasData(new TipoSituacao { Id = TipoSituacaoEnum.Ativado,  NomeTipoSituacao = TipoSituacaoEnum.Ativado.ToString() });
+            //modelBuilder.Entity<TipoSituacao>().HasData(new TipoSituacao { Id = TipoSituacaoEnum.Desativado,  NomeTipoSituacao = TipoSituacaoEnum.Desativado.ToString() });
+
+            //#endregion
             base.OnModelCreating(modelBuilder);
         }
 
