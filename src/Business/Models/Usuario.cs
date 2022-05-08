@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Business.Models
 {
@@ -15,6 +15,17 @@ namespace Business.Models
         public string ConfirmPassword { get; set; }
         public string Imagem { get; set; }
 
+        public string Abreviatura()
+        {
+            var arrNome = this.Nome.Split(' ');
+            var primeira = arrNome[0].Substring(0, 1);
+            var ultima = string.Empty;
+            
+            if(arrNome.Length > 1)
+                ultima = arrNome.LastOrDefault().Substring(0, 1);             
+            
+            return (primeira + ultima).ToUpper();
+        }
 
     }
 }

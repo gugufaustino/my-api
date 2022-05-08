@@ -133,6 +133,7 @@ namespace ApiApplication.Controllers
             claims.Add(new Claim(nameof(Usuario.CPF), usuario.CPF));
             claims.Add(new Claim(nameof(Usuario.Telefone), usuario.Telefone ?? ""));
             claims.Add(new Claim(nameof(Usuario.Imagem), usuario.Imagem ?? ""));
+            claims.Add(new Claim(nameof(Usuario.Abreviatura), usuario.Abreviatura()?? ""));
 
             var claimsUserToken = new List<Claim>(claims);
 

@@ -35,8 +35,7 @@ namespace Data.Mappings
                     .HasColumnType("varchar(50)");
             
             builder.Property(p => p.Imagem)
-                .HasColumnType("varchar(1000)");  
-
+                .HasColumnType("varchar(1000)");
 
             builder.ToTable("Usuarios");
 

@@ -50,5 +50,11 @@ servidor json ???
 
 
 
+Rodar o Frest:
+na pasta rodar:
+    http-server
+instalar:
+    npm install --global http-server
+
 
 
