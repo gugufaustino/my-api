@@ -1,0 +1,54 @@
+https://localhost:44390/status
+
+:::: ATIVIDADES
+  
+
+:::: Acesso
+Well.faustino@hotmail.com
+Teste@123
+
+:::: COMANDOS    
+Node Multiple Versions
+nmv == É node multiplas versões
+
+Node + npm
+node -v
+npm -v
+ npm install = instala pacotes da aplicação(package.json)
+
+angular CLI
+
+npm install -g @angular/cli
+
+ng v
+ng help
+ng b --configuration production
+
+
+gerar help
+ng g component --help
+
+módulo:
+ ng g module fornecedor --route fornecedor --module app.module
+ ao criar: 
+
+component:
+ng g component fornecedor/listar --module fornecedor --skip-tests
+
+ng serve
+
+ng build ?
+ v
+
+CMD:
+dotnet publish my-api.sln -c release -o .\publish\ -f net5.0 -r win-x64 --self-contained true /p:EnvironmentName=Development /p:AspNetCoreHostingModel=outofprocess
+
+GIT action:
+dotnet publish my-api.sln -c release -f net5.0 -r win-x64 --self-contained true /p:EnvironmentName=Development /p:AspNetCoreHostingModel=outofprocess -o .\\publish\\
+
+servidor json ???
+
+
+
+
+
