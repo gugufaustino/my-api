@@ -45,7 +45,7 @@ namespace ApiApplication.Controllers
         }
 
         [HttpPost("nova-conta")]
-        public async Task<ActionResult> Registrar(UsuarioViewModel usuarioModel)
+        public async Task<ActionResult> Registrar(RegisterViewModel usuarioModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -69,11 +69,13 @@ namespace ApiApplication.Controllers
                     if (!result.Succeeded)
                     {
                         foreach (var erro in result.Errors)
-                            ToTransmit(erro.Description);
-                       
+                            ToTransmit(erro.Description);                       
                     }
                     else
                     {
+                        
+                        var claimsResult = await _userManager.AddClaimAsync(identityUser, new Claim("MODELO", "CONSULTAR, INSERIR, EDITAR, DELETAR"));
+                        
                         await _signInManager.SignInAsync(identityUser, isPersistent: false);
 
                         usuarioModel.Password = string.Empty;
@@ -100,10 +102,9 @@ namespace ApiApplication.Controllers
 
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, isPersistent: false, lockoutOnFailure: true);
             if (result.Succeeded)
-            {
+            {               
                 return CustomResponse(await GerarJwt(login.Email));
             }
             if (result.IsLockedOut)
@@ -172,6 +173,7 @@ namespace ApiApplication.Controllers
                     Email = identityUser.Email,
                     Nome = usuario.Nome,
                     TipoCadastro = usuario.TipoCadastro,
+                    Empresa = default,
                     Claims = claimsUserToken.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }
             };

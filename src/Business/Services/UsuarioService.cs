@@ -26,7 +26,6 @@ namespace Business.Services
         {
 
             if (!ExecuteValidations(new UsuarioValidator(), usuario)) return;
-              
 
             await _repository.Adicionar(usuario);
              

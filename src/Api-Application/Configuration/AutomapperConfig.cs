@@ -10,6 +10,11 @@ namespace ApiApplication.Configuration
     {
         public AutomapperConfig()
         {
+            #region AUTH
+            CreateMap<RegisterViewModel, Usuario>();
+            #endregion
+
+
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
             CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
@@ -23,7 +28,7 @@ namespace ApiApplication.Configuration
                                                                                     .Select(i => i.TipoCasting.NomeTipoCasting).ToArray()
                                                                                 ));
 
-            CreateMap<Modelo, ModeloViewModel>()                    
+            CreateMap<Modelo, ModeloViewModel>()
                     .ForMember(prop => prop.NomeTipoSituacao, opt => opt.MapFrom(src => src.TipoSituacao.NomeTipoSituacao))
                     .ForMember(prop => prop.ModeloTipoCasting, opt => opt.MapFrom(src => src.ModeloTipoCasting
                                                                                    .Select(i => i.IdTipoCasting)

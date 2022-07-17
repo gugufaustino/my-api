@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {
+    [Authorize]
     [Route("api/pagamento")]
     public class PagamentoController : BaseApiController
     {

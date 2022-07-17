@@ -28,8 +28,7 @@ namespace Business.Models
             return (primeira + ultima).ToUpper();
         }
 
-    }
-
+    } 
 
     public enum TipoCadastroEnum
     {

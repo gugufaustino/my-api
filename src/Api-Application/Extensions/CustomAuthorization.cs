@@ -11,8 +11,8 @@ namespace ApiApplication.Extensions
 {
     public class Action
     {
-        public const string POST = "INSERIR";
         public const string GET = "CONSULTAR";
+        public const string POST = "INSERIR";
         public const string PUT = "EDITAR";
         public const string DELETE = "DELETAR";
     }
