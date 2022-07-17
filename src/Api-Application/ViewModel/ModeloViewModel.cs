@@ -72,9 +72,7 @@ namespace ApiApplication.ViewModel
         public string[] NomeTipoCasting { get; set; }
 
         public string ImagemPerfilNome { get; set; }
-        public string ImagemPerfilUpload { get; set; }
-
-
+        public string ImagemPerfilUpload { get; set; } 
      
     }
 }

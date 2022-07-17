@@ -14,6 +14,7 @@ namespace Business.Models
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string Imagem { get; set; }
+        public TipoCadastroEnum  TipoCadastro { get; set; }
 
         public string Abreviatura()
         {
@@ -27,5 +28,12 @@ namespace Business.Models
             return (primeira + ultima).ToUpper();
         }
 
+    }
+
+
+    public enum TipoCadastroEnum
+    {
+        AgenteAutonomo = 1,
+        AgenciaEmpresa = 2,
     }
 }

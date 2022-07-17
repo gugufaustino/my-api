@@ -16,7 +16,7 @@ namespace ApiApplication.Extensions
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var context = scope.ServiceProvider.GetService<AppDbContext>();
+                var context = services.GetService<AppDbContext>();
 
                 AppDbSeedData.SeedTipoSituacao(context);
             }

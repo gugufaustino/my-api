@@ -46,13 +46,21 @@ namespace ApiApplication.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
+        [HttpGet("listar-catalogo")]
         [ClaimsAuthorize(Permissao)]
-        public async Task<IEnumerable<CatalogoViewModel>> Listar([FromQuery] CatalogoModeloFilter filtro)
+        public async Task<IEnumerable<CatalogoViewModel>> ListarCatalogo([FromQuery] CatalogoModeloFilter filtro)
         {
             var lista = await _repository.Pesquisar(filtro);
             lista = lista.OrderBy(i => i.Nome).ToList();
             return _mapper.Map<IEnumerable<CatalogoViewModel>>(lista);
+        }
+        [HttpGet]
+        [ClaimsAuthorize(Permissao)]
+        public async Task<IEnumerable<ModeloViewModel>> Listar([FromQuery] CatalogoModeloFilter filtro)
+        {
+            var lista = await _repository.Pesquisar(filtro);
+            lista = lista.OrderBy(i => i.Nome).ToList();
+            return _mapper.Map<IEnumerable<ModeloViewModel>>(lista);
         }
 
         [HttpGet("{id:int}")]

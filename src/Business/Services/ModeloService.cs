@@ -85,8 +85,9 @@ namespace Business.Services
         public async Task Excluir(int id)
         {
             var entity = await _repository.ObterPorId(id);
-
+            await _repository.RemoverPorModeloTipoCasting(entity.Id);
             await _repository.Remover(entity);
+            await _enderecoService.Excluir(entity.IdEndereco);
         }
 
 

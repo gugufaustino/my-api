@@ -22,6 +22,7 @@ namespace ApiApplication.Configuration
             services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
+                 .AddErrorDescriber<IdentityErrorDescriberPtBr>()
                 .AddDefaultTokenProviders();
 
             //JWT

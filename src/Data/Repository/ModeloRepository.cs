@@ -23,6 +23,7 @@ namespace Data.Repository
         {
             IQueryable<Modelo> query = Db.Modelos
                                             .Include(i => i.TipoSituacao)
+                                            .Include(i => i.Endereco)
                                             .Include(i => i.ModeloTipoCasting).ThenInclude(s => s.TipoCasting)
                                             .AsNoTracking();
 
@@ -54,6 +55,13 @@ namespace Data.Repository
         {
             Db.ModeloTipoCasting.RemoveRange(modeloTipoCastings);
             return await SaveChanges();
+        }       
+        
+        public async Task RemoverPorModeloTipoCasting(int idModelo)
+        {
+            var modelTipoCastings = Db.ModeloTipoCasting.Where(i => i.IdModelo == idModelo);
+            Db.ModeloTipoCasting.RemoveRange(modelTipoCastings);
+             await SaveChanges();
         }
 
         public async Task<int> AdicionarModeloTipoCasting(IEnumerable<ModeloTipoCasting> novosModeloTipoCastings)

@@ -26,6 +26,9 @@ namespace ApiApplication.ViewModel
         [Required]
         public string ConfirmPassword { get; set; }
 
+        [Required]
+        public int TipoCadastro { get; set; }
+
 
 
     }

@@ -37,6 +37,9 @@ namespace Data.Mappings
             builder.Property(p => p.Imagem)
                 .HasColumnType("varchar(1000)");
 
+            builder.Property(p => p.TipoCadastro)
+                     .IsRequired();
+
             builder.ToTable("Usuarios");
 
 
