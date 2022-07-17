@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Business.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace ApiApplication.ViewModel
         public string Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
-        public int TipoCadastro { get; set; }
+        public TipoCadastroEnum TipoCadastro { get; set; }
         public IEnumerable<ClaimViewModel> Claims { get; set; }
     }
 

@@ -171,7 +171,7 @@ namespace ApiApplication.Controllers
                     Id = identityUser.Id,
                     Email = identityUser.Email,
                     Nome = usuario.Nome,
-                    TipoCadastro = (int)usuario.TipoCadastro,
+                    TipoCadastro = usuario.TipoCadastro,
                     Claims = claimsUserToken.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }
             };
