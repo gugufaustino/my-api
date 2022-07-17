@@ -133,11 +133,10 @@ namespace ApiApplication.Controllers
             claims.Add(new Claim(nameof(Usuario.CPF), usuario.CPF));
             claims.Add(new Claim(nameof(Usuario.Telefone), usuario.Telefone ?? ""));
             claims.Add(new Claim(nameof(Usuario.Imagem), usuario.Imagem ?? ""));
-            claims.Add(new Claim(nameof(Usuario.Abreviatura), usuario.Abreviatura()?? ""));
-
+            claims.Add(new Claim(nameof(Usuario.Abreviatura), usuario.Abreviatura()?? ""));            
             var claimsUserToken = new List<Claim>(claims);
 
-            //claims usadas pelo Identity não precisam ficar abertas no userToken
+            //claims usadas pelo Identity, essas não precisam ficar abertas no userToken
             claims.Add(new Claim(ClaimTypes.Name, usuario.Nome));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, identityUser.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, identityUser.Id));
@@ -172,6 +171,7 @@ namespace ApiApplication.Controllers
                     Id = identityUser.Id,
                     Email = identityUser.Email,
                     Nome = usuario.Nome,
+                    TipoCadastro = (int)usuario.TipoCadastro,
                     Claims = claimsUserToken.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }
             };
