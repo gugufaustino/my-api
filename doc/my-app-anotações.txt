@@ -59,5 +59,10 @@ instalar:
     
     sm 576px, md 768px, lg 992px, xl 1200px, xxl-1400px
 
+    
+
+1 we_gugu@hotmail.com
+1 well.faustino@hotmail.com
+2 wellington.faustino@ntconsult.com.br
 
 

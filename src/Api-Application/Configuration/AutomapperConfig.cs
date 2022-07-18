@@ -11,7 +11,7 @@ namespace ApiApplication.Configuration
         public AutomapperConfig()
         {
             #region AUTH
-            CreateMap<RegisterViewModel, Usuario>();
+            CreateMap<AccountViewModel, Usuario>();
             #endregion
 
 

@@ -44,8 +44,33 @@ namespace ApiApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("nova-conta")]
-        public async Task<ActionResult> Registrar(RegisterViewModel usuarioModel)
+        [HttpPost("registrar-agencia")]
+        public async Task<ActionResult> RegistrarAgencia(AgenciaViewModel empresaModel)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
+            //var usuarioo = _mapper.Map<Empresa>(empresaModel);
+            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
+            {
+                try
+                {
+
+                   // await _usuarioService.Adicionar(usuarioo);
+                    if (_broadcaster.HasNotifications()) return CustomResponse(empresaModel);
+                     
+                     
+
+                }
+                catch (Exception ex)
+                {
+                    scope.Dispose();
+                    ToTransmit(ex.Message);
+                }
+            }
+            return CustomResponse(empresaModel);
+        }
+        [HttpPost("registrar-conta")]
+        public async Task<ActionResult> Registrar(AccountViewModel usuarioModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -173,7 +198,7 @@ namespace ApiApplication.Controllers
                     Email = identityUser.Email,
                     Nome = usuario.Nome,
                     TipoCadastro = usuario.TipoCadastro,
-                    Empresa = default,
+                    Agencia = default,
                     Claims = claimsUserToken.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }
             };

@@ -1,13 +1,10 @@
 ﻿using Business.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApiApplication.ViewModel
 {
-    public class RegisterViewModel
+    public class AccountViewModel
     {
 
         [Required]
@@ -55,17 +52,19 @@ namespace ApiApplication.ViewModel
         public string Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
-        public EmpresaViewModel Empresa { get; set; }
+        public AgenciaViewModel Agencia { get; set; }
 
         public TipoCadastroEnum TipoCadastro { get; set; }
         public IEnumerable<ClaimViewModel> Claims { get; set; }
     }
 
-    public class EmpresaViewModel
+    public class AgenciaViewModel
     {
         public string RazaoSocial { get; set; }
-        public string NomeFantasia { get; set; }
         public string Cnpj { get; set; }
+        public string NomeFantasia { get; set; }
+        public string Instagram { get; set; }
+        public string Email { get; set; }
     }
 
     public class ClaimViewModel
