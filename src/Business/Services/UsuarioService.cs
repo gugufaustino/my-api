@@ -13,13 +13,15 @@ namespace Business.Services
 {
     public class UsuarioService : BaseService, IUsuarioService
     {
+        private readonly IAgenciaService _agenciaService;
         private readonly IUsuarioRepository _repository;
         public UsuarioService(IUsuarioRepository repository,
-                                IBroadcaster broadcaster)
+                                IBroadcaster broadcaster,
+                                IAgenciaService agenciaService)
             : base(broadcaster)
         {
             _repository = repository;
-
+            _agenciaService = agenciaService;
         }
 
         public async Task Adicionar(Usuario usuario)
@@ -27,14 +29,25 @@ namespace Business.Services
 
             if (!ExecuteValidations(new UsuarioValidator(), usuario)) return;
 
+            if (usuario.TipoCadastro == TipoCadastroEnum.AgenteAutonomo)
+            {
+                var agencia = new Agencia(usuario.Nome)
+                {
+                    TipoSituacao = TipoSituacaoEnum.Ativado
+                };
+
+                await _agenciaService.Adicionar(agencia);
+                usuario.Agencia = agencia;
+            }
+
             await _repository.Adicionar(usuario);
-             
+
         }
-       
+
         public async Task<Usuario> ObterUsuarioLogon(string email)
         {
-            var retorno = await _repository.Obter(w => w.Email == email);
-            return retorno;
+            return await _repository.ObterUsuarioLogon(email);
+             
         }
 
         public void Dispose()

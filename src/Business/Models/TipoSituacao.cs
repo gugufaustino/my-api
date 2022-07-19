@@ -16,6 +16,7 @@ namespace Business.Models
     {
         EmElaboracao = 0,
         Ativado = 1,
-        Desativado = 2
+        Desativado = 2,
+        EmAprovacao = 3
     }
 }

@@ -27,6 +27,7 @@ namespace ApiApplication.Configuration
             services.AddScoped<IEnderecoService, EnderecoService>();
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IModeloService, ModeloService>();
+            services.AddScoped<IAgenciaService, AgenciaService>();
 
             services.AddScoped<IValidator<Fornecedor>, FornecedorValidation>();
             
@@ -39,6 +40,9 @@ namespace ApiApplication.Configuration
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IModeloRepository, ModeloRepository>();
+            
+            services.AddScoped<IAgenciaRepository, AgenciaRepository>();
+            services.AddScoped<IAgenciaEmpresaRepository, AgenciaEmpresaRepository>();
             
             services.AddScoped<IUser, User>();
 

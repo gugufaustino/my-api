@@ -21,6 +21,8 @@ namespace Data.Contexto
         public DbSet<Modelo> Modelos { get; set; }
         public DbSet<TipoSituacao> TipoSituacao { get; set; }        
         public DbSet<ModeloTipoCasting> ModeloTipoCasting { get; set; }
+        public DbSet<Agencia> Agencias { get; set; }
+        public DbSet<AgenciaEmpresa> AgenciasEmpresa { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

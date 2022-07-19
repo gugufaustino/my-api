@@ -41,12 +41,9 @@ namespace Data.Mappings
                      .IsRequired();
 
             builder.ToTable("Usuarios");
-
-
+ 
+            
             //Convesão: Na classe que possui as filhas que se configura o relacionamento. Exempo:
-
-            // classe FornMapping 
-
             // 1: 1 => forn-endereço
             // builder.HasOne(f=> f.Endereco)
             //         .WithOne(e=> e.Fornecedor)

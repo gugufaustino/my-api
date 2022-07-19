@@ -2,6 +2,8 @@
 using Business.Interface.Repository;
 using Business.Models;
 using Data.Contexto;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Data.Repository
 {
@@ -12,5 +14,12 @@ namespace Data.Repository
 
         }
 
+        public Task<Usuario> ObterUsuarioLogon(string email)
+        {
+            return this.DbSet.Include(i => i.Agencia)
+                              .ThenInclude(ae => ae.AgenciaEmpresa)
+                              .AsNoTracking()
+                              .SingleAsync(i => i.Email.ToLower() == email.ToLower());
+        }
     }
 }

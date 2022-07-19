@@ -75,5 +75,10 @@ namespace Data.Repository
         {
             throw new NotImplementedException();
         }
+
+        public Task<Usuario> ObterUsuarioLogon(string email)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

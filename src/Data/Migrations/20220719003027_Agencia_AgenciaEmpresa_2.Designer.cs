@@ -4,14 +4,16 @@ using Data.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220719003027_Agencia_AgenciaEmpresa_2")]
+    partial class Agencia_AgenciaEmpresa_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,6 +32,7 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Instagram")
+                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("varchar(250)");
 
@@ -39,9 +42,6 @@ namespace Data.Migrations
                         .HasColumnType("varchar(250)");
 
                     b.Property<int>("TipoCadastro")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TipoSituacao")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

@@ -66,3 +66,5 @@ instalar:
 2 wellington.faustino@ntconsult.com.br
 
 
+criar agencia/organizacao
+modelos vincular ao idAgencia

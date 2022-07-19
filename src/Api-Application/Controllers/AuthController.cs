@@ -96,11 +96,16 @@ namespace ApiApplication.Controllers
                         foreach (var erro in result.Errors)
                             ToTransmit(erro.Description);                       
                     }
-                    else
+
+                    var claimsResult = await _userManager.AddClaimAsync(identityUser, new Claim("MODELO", "CONSULTAR, INSERIR, EDITAR, DELETAR"));
+                    if (!claimsResult.Succeeded)
                     {
-                        
-                        var claimsResult = await _userManager.AddClaimAsync(identityUser, new Claim("MODELO", "CONSULTAR, INSERIR, EDITAR, DELETAR"));
-                        
+                        foreach (var erro in claimsResult.Errors)
+                            ToTransmit(erro.Description);
+                    }
+
+                    if(!_broadcaster.HasNotifications())
+                    {
                         await _signInManager.SignInAsync(identityUser, isPersistent: false);
 
                         usuarioModel.Password = string.Empty;
@@ -159,7 +164,9 @@ namespace ApiApplication.Controllers
             claims.Add(new Claim(nameof(Usuario.CPF), usuario.CPF));
             claims.Add(new Claim(nameof(Usuario.Telefone), usuario.Telefone ?? ""));
             claims.Add(new Claim(nameof(Usuario.Imagem), usuario.Imagem ?? ""));
-            claims.Add(new Claim(nameof(Usuario.Abreviatura), usuario.Abreviatura()?? ""));            
+            claims.Add(new Claim(nameof(Usuario.Abreviatura), usuario.Abreviatura()?? ""));
+
+            claims.Add(new Claim(nameof(Usuario.IdAgencia), usuario.IdAgencia.ToString()));
             var claimsUserToken = new List<Claim>(claims);
 
             //claims usadas pelo Identity, essas não precisam ficar abertas no userToken
@@ -198,7 +205,11 @@ namespace ApiApplication.Controllers
                     Email = identityUser.Email,
                     Nome = usuario.Nome,
                     TipoCadastro = usuario.TipoCadastro,
-                    Agencia = default,
+                    Agencia = new
+                    {
+                        Id = usuario.Agencia.Id,
+                        NomeAgencia = usuario.Agencia.NomeAgencia
+                    },
                     Claims = claimsUserToken.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
                 }
             };
