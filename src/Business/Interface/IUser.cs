@@ -10,5 +10,6 @@ namespace Business.Interface
     {
         string Id { get; }
         string UserName { get; }
+        string Email { get; }
     }
 }

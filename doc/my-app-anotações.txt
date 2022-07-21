@@ -1,8 +1,21 @@
 
+
+
+#region usuarios
+
+sm 576px, md 768px, lg 992px, xl 1200px, xxl-1400px
 https://localhost:44390/status
 
-:::: ATIVIDADES
-  
+1 well.faustino@hotmail.com
+2 wellington.faustino@ntconsult.com.br
+11 we_gugu@hotmail.com
+
+#endregion
+
+
+ 
+#region  Acesso  e comandos
+
 
 :::: Acesso
 Well.faustino@hotmail.com
@@ -56,15 +69,25 @@ na pasta rodar:
     http-server
 instalar:
     npm install --global http-server
-    
-    sm 576px, md 768px, lg 992px, xl 1200px, xxl-1400px
 
-    
+ #endregion    
+  
 
-1 we_gugu@hotmail.com
-1 well.faustino@hotmail.com
-2 wellington.faustino@ntconsult.com.br
+#region helps
+sm 576px, md 768px, lg 992px, xl 1200px, xxl-1400px
+
+let myComp = document.getElementsByTagName("app-cadastro-agencia")[0];
+appComponent = ng.getComponent(myComp)
+var serv = appComponent.toastr
+serv.success("cadastro realizado com sucesso");
+
+
+#endregion
+
+
 
 
 criar agencia/organizacao
 modelos vincular ao idAgencia
+
+OS - Relatorio Preço dos Itens

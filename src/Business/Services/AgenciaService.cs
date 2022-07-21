@@ -2,6 +2,7 @@ using Business.Interface;
 using Business.Interface.Repository;
 using Business.Interface.Services;
 using Business.Models;
+using Business.Util;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,19 +13,21 @@ namespace Business.Services
 
         private readonly IAgenciaRepository _repository;
         private readonly IAgenciaEmpresaRepository _repositoryEmpresa;
+
         public AgenciaService(IBroadcaster broadcaster,
-            IAgenciaRepository AgenciaRepository)
+                                IAgenciaRepository AgenciaRepository,
+                                IAgenciaEmpresaRepository repositoryEmpresa)
             : base(broadcaster)
         {
             _repository = AgenciaRepository;
-
+            _repositoryEmpresa = repositoryEmpresa;
         }
 
         public async Task Adicionar(Agencia agencia)
         {
+            agencia.AgenciaEmpresa.Cnpj = agencia.AgenciaEmpresa.Cnpj.RemoverMascara();
             await _repository.Adicionar(agencia);
-            if(agencia.AgenciaEmpresa != null)
-                await _repositoryEmpresa.Adicionar(agencia.AgenciaEmpresa);
+            
         }
 
         public async Task Adicionar(List<Agencia> lstGerarAgencias)

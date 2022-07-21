@@ -10,5 +10,7 @@ namespace Business.Interface.Services
     {
         Task Adicionar(Usuario usuario);
         Task<Usuario> ObterUsuarioLogon(string email);
+
+        Task AdicionarAgenciaEmpresa(Agencia agencia);
     }
 }

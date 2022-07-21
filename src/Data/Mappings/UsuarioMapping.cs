@@ -40,6 +40,8 @@ namespace Data.Mappings
             builder.Property(p => p.TipoCadastro)
                      .IsRequired();
 
+            builder.Property(p => p.IdAgencia);
+
             builder.ToTable("Usuarios");
  
             

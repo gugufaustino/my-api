@@ -15,13 +15,16 @@ namespace Business.Services
     {
         private readonly IAgenciaService _agenciaService;
         private readonly IUsuarioRepository _repository;
+        private readonly IUser _user;
         public UsuarioService(IUsuarioRepository repository,
                                 IBroadcaster broadcaster,
-                                IAgenciaService agenciaService)
+                                IAgenciaService agenciaService,
+                                IUser user)
             : base(broadcaster)
         {
             _repository = repository;
             _agenciaService = agenciaService;
+            _user = user;
         }
 
         public async Task Adicionar(Usuario usuario)
@@ -44,10 +47,22 @@ namespace Business.Services
 
         }
 
+        public async Task AdicionarAgenciaEmpresa(Agencia agenciaEmpresa)
+        {
+            agenciaEmpresa.TipoSituacao = TipoSituacaoEnum.EmElaboracao;
+
+            await _agenciaService.Adicionar(agenciaEmpresa);
+            var usuario = await _repository.Obter(i=> i.Email.ToLower() == _user.Email.ToLower());
+            usuario.Agencia = agenciaEmpresa;
+
+            await _repository.Editar(usuario);
+
+        }
+
         public async Task<Usuario> ObterUsuarioLogon(string email)
         {
             return await _repository.ObterUsuarioLogon(email);
-             
+
         }
 
         public void Dispose()

@@ -17,8 +17,11 @@ namespace Data.Mappings
                     .IsRequired()
                     .HasColumnType("varchar(500)");
 
+            builder.HasIndex(i => i.Cnpj).IsUnique();
             builder.Property(p => p.Cnpj)
-                    .IsRequired();
+                    .IsRequired()
+                    .HasColumnType("varchar(14)");
+
 
             builder.Property(p => p.NomeFantasia)
                     .IsRequired()
@@ -28,11 +31,7 @@ namespace Data.Mappings
                     .IsRequired()
                     .HasColumnType("varchar(250)");
 
-            builder.ToTable("AgenciasEmpresa");
-
-
-            
-
+            builder.ToTable("AgenciasEmpresa"); 
 
 
         }

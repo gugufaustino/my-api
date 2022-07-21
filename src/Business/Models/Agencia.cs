@@ -18,11 +18,27 @@ namespace Business.Models
             TipoCadastro = TipoAgenciaEnum.AgenteAutonomo;
         }
 
+        public Agencia(string razaoSocial, string cnpj, string nomeFantasia, string instagram, string email)  
+        {
+           
+            NomeAgencia = nomeFantasia;
+            Instagram = instagram;
+            TipoCadastro = TipoAgenciaEnum.AgenciaEmpresa;
+
+            AgenciaEmpresa = new AgenciaEmpresa
+            {
+                RazaoSocial = razaoSocial,
+                Cnpj = cnpj,
+                NomeFantasia = nomeFantasia,
+                Email = email
+            };
+
+        }
+
         public string NomeAgencia { get; set; }
         public string Instagram { get; set; }
         public TipoAgenciaEnum TipoCadastro { get; set; }
         public TipoSituacaoEnum TipoSituacao { get; set; }
-        public int? IdEmpresa { get; set; }
         public AgenciaEmpresa AgenciaEmpresa { get; set; }
         public IEnumerable<Usuario> Usuario { get; set; }
     }

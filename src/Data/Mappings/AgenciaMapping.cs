@@ -25,8 +25,6 @@ namespace Data.Mappings
 
             builder.Property(p => p.TipoCadastro)
                     .IsRequired();
-            
-            builder.Property(p => p.IdEmpresa);
 
             builder.ToTable("Agencias");
 
@@ -37,8 +35,8 @@ namespace Data.Mappings
 
 
             builder.HasOne(f => f.AgenciaEmpresa)
-                    .WithOne(p => p.Agencia)
-                    .HasForeignKey<Agencia>(pr => pr.IdEmpresa);
+                    .WithOne()
+                    .HasForeignKey<AgenciaEmpresa>(pr => pr.Id);
 
         }
 

@@ -5,10 +5,7 @@ using Business.Interface;
 using Business.Interface.Repository;
 using Business.Interface.Services;
 using Business.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,27 +18,31 @@ namespace ApiApplication.Controllers
     {
 
         const string Permissao = "USUARIO";
-       
+
         private readonly IUsuarioRepository _repository;
         private readonly IUsuarioService _service;
+        private readonly IAgenciaService _serviceAgencia;
         private readonly IMapper _mapper;
 
         public CadastroController(IUsuarioRepository repository,
                                   IUsuarioService service,
                                   IMapper mapper,
-                                  IBroadcaster broadcaster)
+                                  IBroadcaster broadcaster,
+                                  IAgenciaService serviceAgencia
+                                  )
            : base(broadcaster)
         {
             _repository = repository;
             _service = service;
             _mapper = mapper;
+            _serviceAgencia = serviceAgencia;
         }
 
-        [HttpGet] 
+        [HttpGet]
         public async Task<IEnumerable<UsuarioViewModel>> Listar()
         {
             var lista = await _repository.ListarTodos();
-            return _mapper.Map<IEnumerable<UsuarioViewModel>>(lista);            
+            return _mapper.Map<IEnumerable<UsuarioViewModel>>(lista);
         }
 
 
@@ -76,17 +77,39 @@ namespace ApiApplication.Controllers
             return CustomResponse(new { apelido = usuario.Apelido });
         }
 
+       
+        [HttpPost]
+        [ClaimsAuthorize(Permissao)]
+        public  Task<ActionResult> Adicionar(EmpresaViewModel empresaModel)
+        {
+            throw new System.Exception();
+            //if (!ModelState.IsValid) return CustomResponse(ModelState);
+            
+            //await _service.AdicionarAgencia(new Agencia(empresaModel.RazaoSocial, 
+            //                                            empresaModel.Cnpj,
+            //                                            empresaModel.NomeFantasia,
+            //                                            empresaModel.Instagram,
+            //                                            empresaModel.Email));
 
-        //[HttpPost]
-        //public async Task<ActionResult<UsuarioViewModel>> Adicionar(UsuarioViewModel usuario)
-        //{
-        //    if (!ModelState.IsValid) return CustomResponse(ModelState);
+            //return CustomResponse(empresaModel);
+        }
 
-        //    await _service.Adicionar(_mapper.Map<Usuario>(usuario));
+        [HttpPost("adicionar-agencia")]
+        [ClaimsAuthorize(Permissao)]
+        public async Task<ActionResult> AdicionarAgenciaEmpresa(EmpresaViewModel empresaModel)
+        {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
-        //    return CustomResponse();
-        //}
+            await _service.AdicionarAgenciaEmpresa(new Agencia(empresaModel.RazaoSocial,
+                                                        empresaModel.Cnpj,
+                                                        empresaModel.NomeFantasia,
+                                                        empresaModel.Instagram,
+                                                        empresaModel.Email));
 
+            return CustomResponse(empresaModel);
+        }
+
+        
         [HttpPut("{id}")]
         public ActionResult Atualizar(int id, UsuarioViewModel usuarioViewModel)
         {
@@ -100,7 +123,7 @@ namespace ApiApplication.Controllers
         }
 
         [HttpDelete("{id}")]
-        public  ActionResult Delete(int id)
+        public ActionResult Delete(int id)
         {
             UsuarioViewModel usuarioViewModel = new() { Id = id };
             if (usuarioViewModel.Nome == null) return NotFound();

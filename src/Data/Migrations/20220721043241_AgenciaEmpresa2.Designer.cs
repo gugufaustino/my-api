@@ -4,14 +4,16 @@ using Data.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220721043241_AgenciaEmpresa2")]
+    partial class AgenciaEmpresa2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,6 +27,9 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("IdEmpresa")
+                        .HasColumnType("int");
 
                     b.Property<string>("Instagram")
                         .IsUnicode(false)
@@ -42,6 +47,10 @@ namespace Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdEmpresa")
+                        .IsUnique()
+                        .HasFilter("[IdEmpresa] IS NOT NULL");
 
                     b.ToTable("Agencias");
                 });
@@ -72,9 +81,6 @@ namespace Data.Migrations
                         .HasColumnType("varchar(500)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Cnpj")
-                        .IsUnique();
 
                     b.ToTable("AgenciasEmpresa");
                 });
@@ -474,14 +480,13 @@ namespace Data.Migrations
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("Business.Models.AgenciaEmpresa", b =>
+            modelBuilder.Entity("Business.Models.Agencia", b =>
                 {
-                    b.HasOne("Business.Models.Agencia", "Agencia")
-                        .WithOne("AgenciaEmpresa")
-                        .HasForeignKey("Business.Models.AgenciaEmpresa", "Id")
-                        .IsRequired();
+                    b.HasOne("Business.Models.AgenciaEmpresa", "AgenciaEmpresa")
+                        .WithOne("Agencia")
+                        .HasForeignKey("Business.Models.Agencia", "IdEmpresa");
 
-                    b.Navigation("Agencia");
+                    b.Navigation("AgenciaEmpresa");
                 });
 
             modelBuilder.Entity("Business.Models.Fornecedor", b =>
@@ -549,9 +554,12 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Business.Models.Agencia", b =>
                 {
-                    b.Navigation("AgenciaEmpresa");
-
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Business.Models.AgenciaEmpresa", b =>
+                {
+                    b.Navigation("Agencia");
                 });
 
             modelBuilder.Entity("Business.Models.Conta", b =>

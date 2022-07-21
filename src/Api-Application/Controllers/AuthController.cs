@@ -44,31 +44,6 @@ namespace ApiApplication.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost("registrar-agencia")]
-        public async Task<ActionResult> RegistrarAgencia(AgenciaViewModel empresaModel)
-        {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
-
-            //var usuarioo = _mapper.Map<Empresa>(empresaModel);
-            using (var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
-            {
-                try
-                {
-
-                   // await _usuarioService.Adicionar(usuarioo);
-                    if (_broadcaster.HasNotifications()) return CustomResponse(empresaModel);
-                     
-                     
-
-                }
-                catch (Exception ex)
-                {
-                    scope.Dispose();
-                    ToTransmit(ex.Message);
-                }
-            }
-            return CustomResponse(empresaModel);
-        }
         [HttpPost("registrar-conta")]
         public async Task<ActionResult> Registrar(AccountViewModel usuarioModel)
         {
@@ -94,24 +69,29 @@ namespace ApiApplication.Controllers
                     if (!result.Succeeded)
                     {
                         foreach (var erro in result.Errors)
-                            ToTransmit(erro.Description);                       
+                            ToTransmit(erro.Description);
                     }
 
-                    var claimsResult = await _userManager.AddClaimAsync(identityUser, new Claim("MODELO", "CONSULTAR, INSERIR, EDITAR, DELETAR"));
+                    List<Claim> lstClaim = new()
+                    {
+                        new Claim("MODELO", "CONSULTAR, INSERIR, EDITAR, DELETAR"),
+                        new Claim("USUARIO", "CONSULTAR, INSERIR-AGENDA")
+                    };
+                    var claimsResult = await _userManager.AddClaimsAsync(identityUser, lstClaim);
                     if (!claimsResult.Succeeded)
                     {
                         foreach (var erro in claimsResult.Errors)
                             ToTransmit(erro.Description);
                     }
 
-                    if(!_broadcaster.HasNotifications())
+                    if (!_broadcaster.HasNotifications())
                     {
                         await _signInManager.SignInAsync(identityUser, isPersistent: false);
 
                         usuarioModel.Password = string.Empty;
                         usuarioModel.ConfirmPassword = string.Empty;
                         var dataResult = GerarJwt(usuarioModel.Email).Result;
-                        
+
                         scope.Complete();
                         return CustomResponse(dataResult);
                     }
@@ -134,7 +114,7 @@ namespace ApiApplication.Controllers
 
             var result = await _signInManager.PasswordSignInAsync(login.Email, login.Password, isPersistent: false, lockoutOnFailure: true);
             if (result.Succeeded)
-            {               
+            {
                 return CustomResponse(await GerarJwt(login.Email));
             }
             if (result.IsLockedOut)
@@ -160,16 +140,16 @@ namespace ApiApplication.Controllers
                 claims.Add(new Claim("role", role));
             }
 
+
             claims.Add(new Claim(nameof(Usuario.Apelido), usuario.Apelido ?? ""));
             claims.Add(new Claim(nameof(Usuario.CPF), usuario.CPF));
             claims.Add(new Claim(nameof(Usuario.Telefone), usuario.Telefone ?? ""));
             claims.Add(new Claim(nameof(Usuario.Imagem), usuario.Imagem ?? ""));
-            claims.Add(new Claim(nameof(Usuario.Abreviatura), usuario.Abreviatura()?? ""));
-
-            claims.Add(new Claim(nameof(Usuario.IdAgencia), usuario.IdAgencia.ToString()));
+            claims.Add(new Claim(nameof(Usuario.Abreviatura), usuario.Abreviatura() ?? ""));
             var claimsUserToken = new List<Claim>(claims);
 
-            //claims usadas pelo Identity, essas não precisam ficar abertas no userToken
+            //claims usadas pelo Identity, essas não precisam ficar publicas no userToken
+            claims.Add(new Claim(nameof(Usuario.IdAgencia), usuario.IdAgencia.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, usuario.Nome));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, identityUser.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Sub, identityUser.Id));
@@ -186,8 +166,7 @@ namespace ApiApplication.Controllers
             {
                 Issuer = _appSettings.Emissor,
                 Audience = _appSettings.ValidoEm,
-
-                Expires = DateTime.UtcNow.AddMinutes(_appSettings.ExpiracaoMinutos),
+                Expires = DateTime.UtcNow.AddMinutes(5), //DateTime.UtcNow.AddMinutes(_appSettings.ExpiracaoMinutos),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
 
                 Subject = identityClaims
@@ -201,16 +180,12 @@ namespace ApiApplication.Controllers
                 AccessToken = encoded,
                 UserToken = new UserTokenViewModel
                 {
-                    Id = identityUser.Id,
+                    Claims = claimsUserToken.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value }),
                     Email = identityUser.Email,
                     Nome = usuario.Nome,
                     TipoCadastro = usuario.TipoCadastro,
-                    Agencia = new
-                    {
-                        Id = usuario.Agencia.Id,
-                        NomeAgencia = usuario.Agencia.NomeAgencia
-                    },
-                    Claims = claimsUserToken.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
+                    AgenciaTipoSituacao = usuario?.Agencia?.TipoSituacao,
+                    Agencia = usuario?.Agencia?.TipoSituacao == TipoSituacaoEnum.Ativado ? usuario?.Agencia : default(AgenciaViewModel),
                 }
             };
 

@@ -1,15 +1,9 @@
-﻿using ApiApplication.Extensions;
-using Business.Interface;
+﻿using Business.Interface;
 using Business.Notifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApiApplication.Controllers
 {

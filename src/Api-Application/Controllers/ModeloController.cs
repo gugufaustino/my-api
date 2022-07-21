@@ -74,7 +74,7 @@ namespace ApiApplication.Controllers
 
         [HttpPost]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<ModeloViewModel>> Inserir(ModeloViewModel model)
+        public async Task<ActionResult<ModeloViewModel>> Adicionar(ModeloViewModel model)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
@@ -89,7 +89,7 @@ namespace ApiApplication.Controllers
 
         [HttpPut("{id:int}")]
         [ClaimsAuthorize(Permissao)]
-        public async Task<ActionResult<ModeloViewModel>> Editar(int id, ModeloViewModel model)
+        public async Task<ActionResult<ModeloViewModel>> Atualizar(int id, ModeloViewModel model)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 

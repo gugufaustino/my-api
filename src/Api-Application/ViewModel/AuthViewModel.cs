@@ -1,4 +1,5 @@
 ﻿using Business.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -20,8 +21,8 @@ namespace ApiApplication.ViewModel
         public string ConfirmPassword { get; set; }
 
         [Required]
-        public string Nome { get; set; } 
-        
+        public string Nome { get; set; }
+
         [Required]
         public string CPF { get; set; }
 
@@ -49,16 +50,22 @@ namespace ApiApplication.ViewModel
 
     public class UserTokenViewModel
     {
-        public string Id { get; set; }
+        public IEnumerable<ClaimViewModel> Claims { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
-        public object Agencia { get; set; }
-
         public TipoCadastroEnum TipoCadastro { get; set; }
-        public IEnumerable<ClaimViewModel> Claims { get; set; }
+        public AgenciaViewModel Agencia { get; set; }
+        public TipoSituacaoEnum? AgenciaTipoSituacao { get; set; }
     }
 
     public class AgenciaViewModel
+    {
+        public string NomeAgencia { get; set; }
+
+        public static implicit operator AgenciaViewModel(Agencia agencia)
+            => new AgenciaViewModel { NomeAgencia = agencia.NomeAgencia };
+    }
+    public class EmpresaViewModel
     {
         public string RazaoSocial { get; set; }
         public string Cnpj { get; set; }
