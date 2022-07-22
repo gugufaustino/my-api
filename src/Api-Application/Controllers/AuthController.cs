@@ -55,7 +55,7 @@ namespace ApiApplication.Controllers
                 try
                 {
 
-                    await _usuarioService.Adicionar(usuarioo);
+                    await _usuarioService.Registrar(usuarioo);
                     if (_broadcaster.HasNotifications()) return CustomResponse(usuarioModel);
 
                     IdentityUser identityUser = new()
@@ -65,25 +65,20 @@ namespace ApiApplication.Controllers
                         EmailConfirmed = true
                     };
 
-                    var result = await _userManager.CreateAsync(identityUser, usuarioModel.Password);
-                    if (!result.Succeeded)
-                    {
-                        foreach (var erro in result.Errors)
-                            ToTransmit(erro.Description);
-                    }
+                    var create = await _userManager.CreateAsync(identityUser, usuarioModel.Password);
+                    if (!create.Succeeded)
+                        ToTransmit(create.Errors);
 
-                    List<Claim> lstClaim = new()
+                    else
                     {
-                        new Claim("MODELO", "CONSULTAR, INSERIR, EDITAR, DELETAR"),
-                        new Claim("USUARIO", "CONSULTAR, INSERIR-AGENDA")
-                    };
-                    var claimsResult = await _userManager.AddClaimsAsync(identityUser, lstClaim);
-                    if (!claimsResult.Succeeded)
-                    {
-                        foreach (var erro in claimsResult.Errors)
-                            ToTransmit(erro.Description);
+                        var addClaims = await _userManager.AddClaimsAsync(identityUser, new List<Claim>
+                        {
+                            new Claim("MODELO", "CONSULTAR, INSERIR, EDITAR, DELETAR"),
+                            new Claim("USUARIO", "CONSULTAR, INSERIR-AGENDA")
+                        });
+                        if (!addClaims.Succeeded)
+                            ToTransmit(addClaims.Errors);
                     }
-
                     if (!_broadcaster.HasNotifications())
                     {
                         await _signInManager.SignInAsync(identityUser, isPersistent: false);
@@ -105,6 +100,7 @@ namespace ApiApplication.Controllers
             }
             return CustomResponse(usuarioModel);
         }
+
 
         [HttpPost("login")]
         public async Task<ActionResult> Login(LoginViewModel login)

@@ -25,7 +25,7 @@ namespace ApiApplication.Controllers
 
         const string Permissao = "MODELO";
 
-        private readonly ILogger<ContaController> _logger;
+        private readonly ILogger<ModeloController> _logger;
         private readonly IMapper _mapper;
 
 
@@ -33,7 +33,7 @@ namespace ApiApplication.Controllers
         private readonly IModeloService _service;
         private readonly IModeloRepository _repository;
 
-        public ModeloController(ILogger<ContaController> logger,
+        public ModeloController(ILogger<ModeloController> logger,
                                IMapper mapper,
                                IBroadcaster broadcaster,
                                IModeloService service,

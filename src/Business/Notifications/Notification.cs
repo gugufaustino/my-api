@@ -21,6 +21,7 @@ namespace Business.Notifications
     public enum TypeNotification
     {
         Success,
-        Error
+        Error,
+        Validation,
     }
 }

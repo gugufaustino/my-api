@@ -8,7 +8,7 @@ namespace Business.Interface.Services
 {
     public interface IUsuarioService : IDisposable
     {
-        Task Adicionar(Usuario usuario);
+        Task Registrar(Usuario usuario);
         Task<Usuario> ObterUsuarioLogon(string email);
 
         Task AdicionarAgenciaEmpresa(Agencia agencia);

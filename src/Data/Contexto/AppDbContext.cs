@@ -13,10 +13,6 @@ namespace Data.Contexto
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Conta> Contas { get; set; }
-        public DbSet<Pagamento> Pagamentos { get; set; }
-        public DbSet<Fornecedor> Fornecedores { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Modelo> Modelos { get; set; }
         public DbSet<TipoSituacao> TipoSituacao { get; set; }        

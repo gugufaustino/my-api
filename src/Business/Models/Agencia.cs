@@ -18,6 +18,9 @@ namespace Business.Models
             TipoCadastro = TipoAgenciaEnum.AgenteAutonomo;
         }
 
+        /// <summary>
+        /// Constroi Agencia Tipo Agencia
+        /// </summary>
         public Agencia(string razaoSocial, string cnpj, string nomeFantasia, string instagram, string email)  
         {
            

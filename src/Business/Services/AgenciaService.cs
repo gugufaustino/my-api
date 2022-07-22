@@ -23,19 +23,16 @@ namespace Business.Services
             _repositoryEmpresa = repositoryEmpresa;
         }
 
-        public async Task Adicionar(Agencia agencia)
+        public async Task AdicionarAgenciaEmpresa(Agencia agenciaEmpresa)
         {
-            agencia.AgenciaEmpresa.Cnpj = agencia.AgenciaEmpresa.Cnpj.RemoverMascara();
-            await _repository.Adicionar(agencia);
+            agenciaEmpresa.AgenciaEmpresa.Cnpj = agenciaEmpresa.AgenciaEmpresa.Cnpj.RemoverMascara();
+            await _repository.Adicionar(agenciaEmpresa);
             
         }
 
-        public async Task Adicionar(List<Agencia> lstGerarAgencias)
+        public async Task Adicionar(Agencia agencia )
         {
-            foreach (var agencia in lstGerarAgencias)
-            {
-                await _repository.Adicionar(agencia);
-            }
+            await _repository.Adicionar(agencia);            
         }
 
         public async Task Editar(int Id, Agencia agencia)

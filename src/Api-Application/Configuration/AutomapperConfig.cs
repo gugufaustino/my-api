@@ -17,7 +17,7 @@ namespace ApiApplication.Configuration
 
             CreateMap<Usuario, UsuarioViewModel>().ReverseMap();
             CreateMap<Endereco, EnderecoViewModel>().ReverseMap();
-            CreateMap<Cliente, ClienteViewModel>().ReverseMap();
+             
             CreateMap<Modelo, CatalogoViewModel>()
                     .ForMember(prop => prop.NomeCorOlhos, opt => opt.MapFrom(src => src.CorOlhos.ToString()))
                     .ForMember(prop => prop.NomeCorCabelo, opt => opt.MapFrom(src => src.CorCabelo.ToString()))
@@ -39,7 +39,7 @@ namespace ApiApplication.Configuration
 
             // DE -> PARA
             // Conta -> Model
-            CreateMap<Conta, PagamentoViewModel>()
+             /*CreateMap<Conta, PagamentoViewModel>()
                 .ForMember(prop => prop.TipoRecorrenciaDescricao, opt => opt.MapFrom(src => src.TipoRecorrencia.ToString()))
                 .ReverseMap();
 
@@ -63,7 +63,7 @@ namespace ApiApplication.Configuration
                 .ForPath(dest => dest.Conta.DescricaoFornecedor, opt => opt.MapFrom(src => src.DescricaoFornecedor))
                 .ForPath(dest => dest.Conta.TipoRecorrencia, opt => opt.MapFrom(src => src.TipoRecorrencia));
 
-            /*
+           
               CreateMap<TipoRecorrenciaEnum, string>().ConvertUsing(src => src.ToString());
               CreateMap<Produto, ProdutoViewModel>()
                 .ForMember(dest => dest.NomeFornecedor, opt => opt.MapFrom(src => src.Fornecedor.Nome));

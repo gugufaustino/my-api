@@ -7,8 +7,8 @@ namespace Business.Interface
 {
     public interface IBroadcaster
     {
-        bool HasNotifications(TypeNotification typeNotification = TypeNotification.Error);
-        List<Notification> GetNotifications(TypeNotification typeNotification = TypeNotification.Error);
+        bool HasNotifications();
+        List<Notification> GetNotifications(TypeNotification typeNotification);
         void ToTransmit(Notification notificacao);
     }
 }

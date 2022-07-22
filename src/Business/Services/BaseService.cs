@@ -24,17 +24,23 @@ namespace Business.Services
           var result =  validation.Validate(model);
             if (result.IsValid) return true;
 
-            Notify(result);
+            NotifyValidation(result);
             return false;
         }
 
-        private void Notify(ValidationResult validationResult)
+        private void NotifyValidation(ValidationResult validationResult)
         {
             foreach (var error in validationResult.Errors)
             {
-                Notify(error.ErrorMessage);
+                NotifyAsValidation(error.ErrorMessage);
             }
         }
+
+        protected void NotifyAsValidation(string successMessage)
+        {
+            _broadcaster.ToTransmit(new Notification(successMessage, TypeNotification.Validation));
+        }
+
 
         protected void Notify(string errorMessage)
         {
@@ -45,6 +51,8 @@ namespace Business.Services
         {
             _broadcaster.ToTransmit(new Notification(successMessage, TypeNotification.Success));
         }
+
+      
 
     }
 }

@@ -18,9 +18,9 @@ namespace Business.Notifications
             return _notifications.Where(i=> i.TypeNotification == typeNotification).ToList();
         }
 
-        public bool HasNotifications(TypeNotification typeNotification)
+        public bool HasNotifications()
         {
-            return _notifications.Any(i=> i.TypeNotification == typeNotification);
+            return _notifications.Any(i=> i.TypeNotification == TypeNotification.Error || i.TypeNotification == TypeNotification.Validation );
         }
 
         public void ToTransmit(Notification notification)

@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using Business.Interface.Repository;
+using Business.Models;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
@@ -6,10 +7,14 @@ using System.Text;
 
 namespace Business.Services.Validations
 {
-    public class UsuarioValidator : AbstractValidator<Usuario>
+    public class UsuarioValidation : AbstractValidator<Usuario>
     {
-        public UsuarioValidator()
+        private readonly IUsuarioRepository _repository;
+
+        public UsuarioValidation(IUsuarioRepository repository)
         {
+            this._repository = repository;
+
             RuleFor(u => u.Nome)
                 .NotNull()
                 .NotEmpty()
@@ -20,10 +25,26 @@ namespace Business.Services.Validations
                 .NotEmpty();
 
             RuleFor(u => u.Password).Equal(u => u.ConfirmPassword)
-                .WithMessage("O campo senha não confere, não está igual a confirmação");
+                .WithMessage("O campo senha não confere, não está igual a confirmação.");
 
             RuleFor(u => u.Nome).Must(prop => prop.Contains(" "))
-               .WithMessage("Escreva o nome completo");
+               .WithMessage("Escreva o nome completo.");
+
+            RuleFor(u => u.CPF).Must(CpfUnico)
+                .WithMessage("Este CPF já está cadastrado.");
+
+            RuleFor(u => u.Telefone).Must(TelefoneUnico)
+                .WithMessage("Este Telefone já está sendo utilizado.");
+            
+        }
+
+        private bool CpfUnico(Usuario usuario, string cpf)
+        {
+            return !_repository.Existe(i => i.CPF == cpf).Result;
+        }
+        private bool TelefoneUnico(Usuario usuario, string telefone)
+        {
+            return !_repository.Existe(i => i.Telefone == telefone).Result;
         }
     }
 }

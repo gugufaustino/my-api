@@ -1,8 +1,10 @@
 ﻿using Business.Interface;
 using Business.Notifications;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ApiApplication.Controllers
@@ -27,7 +29,7 @@ namespace ApiApplication.Controllers
                 foreach (var erro in errors)
                 {
                     var message = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
-                    _broadcaster.ToTransmit(new Notification(message, TypeNotification.Error));
+                    _broadcaster.ToTransmit(new Notification(message, TypeNotification.Validation));
                 }
             }
 
@@ -47,7 +49,8 @@ namespace ApiApplication.Controllers
                 return BadRequest(new
                 {
                     data = default(object),
-                    errors = _broadcaster.GetNotifications().Select(i => i.Message),
+                    errors = _broadcaster.GetNotifications(TypeNotification.Error).Select(i => i.Message),
+                    validations = _broadcaster.GetNotifications(TypeNotification.Validation).Select(i => i.Message),
                     message = string.Empty,
                     success = false,
                 });
@@ -62,10 +65,17 @@ namespace ApiApplication.Controllers
 
         }
 
-        internal void ToTransmit(string description)
+        internal void ToTransmit(string description, TypeNotification typeNotification = TypeNotification.Error )
         {
-            _broadcaster.ToTransmit(new Notification(description));
+            _broadcaster.ToTransmit(new Notification(description, typeNotification));
         }
+
+        internal void ToTransmit(IEnumerable<IdentityError> errors)
+        {
+            foreach (var erro in errors)
+                ToTransmit(erro.Description, TypeNotification.Validation);
+        }
+
 
         protected void FakeError()
         {
