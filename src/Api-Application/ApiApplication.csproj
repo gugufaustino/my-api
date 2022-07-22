@@ -39,5 +39,11 @@
     <Folder Include="wwwroot\images\profile\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\status.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>

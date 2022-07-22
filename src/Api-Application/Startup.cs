@@ -38,9 +38,10 @@ namespace ApiApplication
 
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddHealthChecks(Configuration);
+
             services.WebApiConfig(Configuration);            
 
-            services.AddHealthChecks(Configuration);
 
             services.ResolveDependencies();
 

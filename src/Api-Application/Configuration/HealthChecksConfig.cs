@@ -19,9 +19,11 @@ namespace ApiApplication.Configuration
 
         public static void AddHealthChecks(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddHealthChecksUI(option => { option.AddHealthCheckEndpoint("API com Health Checks", "/health"); })
+            var baseURI = configuration.GetSection("AppSettings").GetValue<string>("IIS-local") ?? string.Empty;
+            
+            services.AddHealthChecksUI(option => { option.AddHealthCheckEndpoint("endpoint1", baseURI + "/health"); })
                     .AddInMemoryStorage();
-
+            
 
             services.AddHealthChecks()
                     .AddCheck<CustomHealthChecks>("API")
@@ -39,9 +41,9 @@ namespace ApiApplication.Configuration
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
             endpoints.MapHealthChecksUI(config =>
-            {
+            {                
                 config.UIPath = "/status";
-                config.AddCustomStylesheet("status.css");
+                config.AddCustomStylesheet(@"wwwroot\status.css");                
             });
         }
 
