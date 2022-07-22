@@ -5,6 +5,7 @@ using Business.Interface;
 using Business.Interface.Repository;
 using Business.Interface.Services;
 using Business.Models;
+using Business.Util;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,7 +102,7 @@ namespace ApiApplication.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             await _service.AdicionarAgenciaEmpresa(new Agencia(empresaModel.RazaoSocial,
-                                                        empresaModel.Cnpj,
+                                                        empresaModel.Cnpj.RemoverMascara(),
                                                         empresaModel.NomeFantasia,
                                                         empresaModel.Instagram,
                                                         empresaModel.Email));

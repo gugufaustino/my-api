@@ -7,7 +7,7 @@ namespace Business.Interface.Services
 {
    public interface IAgenciaService : IDisposable
     {
-        Task AdicionarAgenciaEmpresa(Agencia agencia);
+        Task<int> AdicionarAgenciaEmpresa(Agencia agencia);
         Task Adicionar(Agencia lstAgencias);
         Task Editar(int id, Agencia agencia);        
         Task Excluir(int id);        

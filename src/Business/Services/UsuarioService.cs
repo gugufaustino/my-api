@@ -47,13 +47,17 @@ namespace Business.Services
 
         public async Task AdicionarAgenciaEmpresa(Agencia agenciaEmpresa)
         {
+
             agenciaEmpresa.TipoSituacao = TipoSituacaoEnum.EmElaboracao;
 
-            await _agenciaService.AdicionarAgenciaEmpresa(agenciaEmpresa);
-            var usuario = await _repository.Obter(i=> i.Email.ToLower() == _user.Email.ToLower());
+            if (await _agenciaService.AdicionarAgenciaEmpresa(agenciaEmpresa) == 0) return;
+
+
+            var usuario = await _repository.Obter(i => i.Email.ToLower() == _user.Email.ToLower());
             usuario.Agencia = agenciaEmpresa;
 
             await _repository.Editar(usuario);
+
 
         }
 

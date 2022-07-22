@@ -26,6 +26,7 @@ namespace ApiApplication.Configuration
             services.AddScoped<IAgenciaService, AgenciaService>();
 
             services.AddScoped<IValidator<Usuario>, UsuarioValidation>();
+            services.AddScoped<IValidator<AgenciaEmpresa>, AgenciaEmpresaValidation>();
 
 
 
