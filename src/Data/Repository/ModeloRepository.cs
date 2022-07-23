@@ -14,18 +14,21 @@ using Business.Interface;
 namespace Data.Repository
 {
     public class ModeloRepository : Repository<Modelo>, IModeloRepository
-    {
+    {    
         public ModeloRepository(AppDbContext appDbContext, IUser user) : base(appDbContext, user)
         {
         }
 
+        private Expression<Func<Modelo, bool>> UserScope => i => i.IdAgencia == User.IdAgencia;
+
         public async Task<List<Modelo>> Pesquisar(CatalogoModeloFilter filter)
         {
-            IQueryable<Modelo> query = Db.Modelos
-                                            .Include(i => i.TipoSituacao)
-                                            .Include(i => i.Endereco)
-                                            .Include(i => i.ModeloTipoCasting).ThenInclude(s => s.TipoCasting)
-                                            .AsNoTracking();
+
+            IQueryable<Modelo> query = Db.Modelos.Where(UserScope)
+                                                .Include(i => i.TipoSituacao)
+                                                .Include(i => i.Endereco)
+                                                .Include(i => i.ModeloTipoCasting).ThenInclude(s => s.TipoCasting)                                            
+                                                .AsNoTracking();
 
             if (!filter.Nome.IsNullOrEmpty()) query = query.Where(w => w.Nome.StartsWith(filter.Nome));
             if (filter.IdadeDe.HasValue) query = query.Where(w => w.DtNascimento <= DateTime.Now.AddYears(-filter.IdadeDe.Value).Date);
@@ -48,20 +51,26 @@ namespace Data.Repository
                             .Include(i => i.Endereco)
                             .Include(i => i.TipoSituacao)
                             .Include(i => i.ModeloTipoCasting).ThenInclude(s => s.TipoCasting)
+                            .Where(UserScope)
                             .FirstAsync(i => i.Id == id);
+        }
+
+        public override async Task<bool> Existe(Expression<Func<Modelo, bool>> predicate)
+        {
+            return await DbSet.Where(UserScope).AnyAsync(predicate);
         }
 
         public async Task<int> RemoverModeloTipoCasting(IEnumerable<ModeloTipoCasting> modeloTipoCastings)
         {
             Db.ModeloTipoCasting.RemoveRange(modeloTipoCastings);
             return await SaveChanges();
-        }       
-        
+        }
+
         public async Task RemoverPorModeloTipoCasting(int idModelo)
         {
             var modelTipoCastings = Db.ModeloTipoCasting.Where(i => i.IdModelo == idModelo);
             Db.ModeloTipoCasting.RemoveRange(modelTipoCastings);
-             await SaveChanges();
+            await SaveChanges();
         }
 
         public async Task<int> AdicionarModeloTipoCasting(IEnumerable<ModeloTipoCasting> novosModeloTipoCastings)

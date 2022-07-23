@@ -6,42 +6,48 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using FluentValidation;
+using Business.Services.Validations;
 
 namespace Business.Services
 {
     public class ModeloService : BaseService, IModeloService
     {
 
-        private readonly IModeloRepository _repository;
-        private readonly IEnderecoService _enderecoService;
-        public ModeloService(IBroadcaster broadcaster,
+        private readonly IModeloRepository repository;
+        private readonly IUser user;
+        private readonly IValidator<Modelo> validator;
+        private readonly IEnderecoService enderecoService;
+
+        public ModeloService(IBroadcaster broadcaster, IUser user, IValidator<Modelo> validator,
             IEnderecoService enderecoService,
-            IModeloRepository ModeloRepository)
+            IModeloRepository repository)
             : base(broadcaster)
         {
-            _repository = ModeloRepository;
-            _enderecoService = enderecoService;
-
+            this.repository = repository;
+            this.user = user;
+            this.validator = validator;
+            this.enderecoService = enderecoService;
         }
 
         public async Task Adicionar(Modelo modelo)
         {
+            if (!ExecuteValidations(validator, modelo)) return;
+
+
+            modelo.IdAgencia = user.IdAgencia.Value;
             modelo.IdTipoSituacao = TipoSituacaoEnum.Ativado;
-            await _enderecoService.Adicionar(modelo.Endereco);
-            await _repository.Adicionar(modelo);
+            await enderecoService.Adicionar(modelo.Endereco);
+            await repository.Adicionar(modelo);
         }
 
-        public async Task Adicionar(List<Modelo> lstGerarModelos)
-        {
-            foreach (var modelo in lstGerarModelos)
-            {
-                await Adicionar(modelo);
-            }
-        }
+ 
 
         public async Task Editar(int Id, Modelo modelo)
         {
-            var entity = await _repository.ObterPorId(Id);
+            if (!ExecuteValidations(validator, modelo)) return;
+
+            var entity = await repository.ObterPorId(Id);
             entity.Nome = modelo.Nome;
             entity.DtNascimento = modelo.DtNascimento;
             entity.Rg = modelo.Rg;
@@ -62,38 +68,38 @@ namespace Business.Services
             entity.TipoCabeloComprimento = modelo.TipoCabeloComprimento;
             entity.ImagemPerfilNome = modelo.ImagemPerfilNome;
 
-            await _enderecoService.Editar(entity.IdEndereco, modelo.Endereco);
+            await enderecoService.Editar(entity.IdEndereco, modelo.Endereco);
             await EditarModeloTipoCasting(entity, entity.ModeloTipoCasting, modelo.ModeloTipoCasting.Select(i => (TipoCastingEnum)i.IdTipoCasting));
             
-            await _repository.Editar(entity);
+            await repository.Editar(entity);
         }
 
         private async Task EditarModeloTipoCasting(Modelo entity, IEnumerable<ModeloTipoCasting> modeloTipoCastings, IEnumerable<TipoCastingEnum> novosTipoCastingEnums)
         {
-            await _repository.RemoverModeloTipoCasting(modeloTipoCastings);
+            await repository.RemoverModeloTipoCasting(modeloTipoCastings);
 
             var novosModeloTipoCastings = novosTipoCastingEnums.Select(i => new ModeloTipoCasting {
                  Modelo = entity,
                  IdTipoCasting = (int)i
             });
             
-            await _repository.AdicionarModeloTipoCasting(novosModeloTipoCastings);
+            await repository.AdicionarModeloTipoCasting(novosModeloTipoCastings);
 
         }
 
 
         public async Task Excluir(int id)
         {
-            var entity = await _repository.ObterPorId(id);
-            await _repository.RemoverPorModeloTipoCasting(entity.Id);
-            await _repository.Remover(entity);
-            await _enderecoService.Excluir(entity.IdEndereco);
+            var entity = await repository.ObterPorId(id);
+            await repository.RemoverPorModeloTipoCasting(entity.Id);
+            await repository.Remover(entity);
+            await enderecoService.Excluir(entity.IdEndereco);
         }
 
 
         public void Dispose()
         {
-            _repository?.Dispose();
+            repository?.Dispose();
             GC.SuppressFinalize(this);
         }
     }

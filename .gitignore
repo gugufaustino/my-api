@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /doc/tool/templates/api/Result
 /doc/tool/templates/angular/Result
 /src/Api-Application/wwwroot/images/profile/*.jpg
+/src/Api-Application/wwwroot/images/profile

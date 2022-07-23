@@ -34,6 +34,10 @@ namespace Business.Models
         public IEnumerable<ModeloTipoCasting> ModeloTipoCasting { get; set; }
 
         public string ImagemPerfilNome { get; set; }
+
+        public int IdAgencia { get; set; }
+        public Agencia Agencia { get; set; }
+
     }
 
     public enum TipoCastingEnum

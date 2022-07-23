@@ -8,8 +8,9 @@ namespace Business.Interface
 {
     public interface IUser
     {
-        string Id { get; }
+        string UserId { get; }
         string UserName { get; }
         string Email { get; }
+        int? IdAgencia { get; }
     }
 }

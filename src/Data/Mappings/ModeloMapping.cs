@@ -85,6 +85,10 @@ namespace Data.Mappings
                     .IsRequired()
                     .HasColumnType("varchar(250)");
 
+       
+
+
+
             builder.ToTable("Modelos");
 
             // 1 : N =>
@@ -101,6 +105,12 @@ namespace Data.Mappings
             builder.HasOne(e => e.TipoSituacao)
                     .WithMany()
                     .HasForeignKey(i => i.IdTipoSituacao);
+
+            builder.Property(p => p.IdAgencia).IsRequired();
+            builder.HasIndex(i => new { i.CPF, i.IdAgencia }).IsUnique();
+            builder.HasOne(e => e.Agencia)
+                    .WithMany()
+                    .HasForeignKey(i => i.IdAgencia);
         }
     }
 }

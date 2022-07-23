@@ -24,23 +24,24 @@ namespace ApiApplication.Controllers
     {
 
         const string Permissao = "MODELO";
-
-        private readonly ILogger<ModeloController> _logger;
         private readonly IMapper _mapper;
+        
+        //TODO: criar observabilidade
+        // private readonly ILogger<ModeloController> _logger;
 
 
 
         private readonly IModeloService _service;
         private readonly IModeloRepository _repository;
 
-        public ModeloController(ILogger<ModeloController> logger,
+        public ModeloController( 
                                IMapper mapper,
                                IBroadcaster broadcaster,
                                IModeloService service,
                                IModeloRepository repository)
            : base(broadcaster)
         {
-            _logger = logger;
+            
             _service = service;
             _mapper = mapper;
             _repository = repository;

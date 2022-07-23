@@ -4,14 +4,16 @@ using Data.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220723140952_modelo_agencia2")]
+    partial class modelo_agencia2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,9 +249,6 @@ namespace Data.Migrations
                     b.HasIndex("IdEndereco");
 
                     b.HasIndex("IdTipoSituacao");
-
-                    b.HasIndex("CPF", "IdAgencia")
-                        .IsUnique();
 
                     b.ToTable("Modelos");
                 });

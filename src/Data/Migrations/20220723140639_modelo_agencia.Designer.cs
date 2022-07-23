@@ -4,14 +4,16 @@ using Data.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220723140639_modelo_agencia")]
+    partial class modelo_agencia
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,7 +179,7 @@ namespace Data.Migrations
                         .IsUnicode(false)
                         .HasColumnType("varchar(250)");
 
-                    b.Property<int>("IdAgencia")
+                    b.Property<int?>("IdAgencia")
                         .HasColumnType("int");
 
                     b.Property<int>("IdEndereco")
@@ -242,14 +244,9 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdAgencia");
-
                     b.HasIndex("IdEndereco");
 
                     b.HasIndex("IdTipoSituacao");
-
-                    b.HasIndex("CPF", "IdAgencia")
-                        .IsUnique();
 
                     b.ToTable("Modelos");
                 });
@@ -363,11 +360,6 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Business.Models.Modelo", b =>
                 {
-                    b.HasOne("Business.Models.Agencia", "Agencia")
-                        .WithMany()
-                        .HasForeignKey("IdAgencia")
-                        .IsRequired();
-
                     b.HasOne("Business.Models.Endereco", "Endereco")
                         .WithMany()
                         .HasForeignKey("IdEndereco")
@@ -377,8 +369,6 @@ namespace Data.Migrations
                         .WithMany()
                         .HasForeignKey("IdTipoSituacao")
                         .IsRequired();
-
-                    b.Navigation("Agencia");
 
                     b.Navigation("Endereco");
 

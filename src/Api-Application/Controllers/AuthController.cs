@@ -162,7 +162,7 @@ namespace ApiApplication.Controllers
             {
                 Issuer = _appSettings.Emissor,
                 Audience = _appSettings.ValidoEm,
-                Expires = DateTime.UtcNow.AddMinutes(5), //DateTime.UtcNow.AddMinutes(_appSettings.ExpiracaoMinutos),
+                Expires = DateTime.UtcNow.AddMinutes(10), //DateTime.UtcNow.AddMinutes(_appSettings.ExpiracaoMinutos),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
 
                 Subject = identityClaims
