@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-
+using System.Transactions;
 
 namespace ApiApplication.Controllers
 {
@@ -25,7 +25,7 @@ namespace ApiApplication.Controllers
 
         const string Permissao = "MODELO";
         private readonly IMapper _mapper;
-        
+
         //TODO: criar observabilidade
         // private readonly ILogger<ModeloController> _logger;
 
@@ -34,14 +34,14 @@ namespace ApiApplication.Controllers
         private readonly IModeloService _service;
         private readonly IModeloRepository _repository;
 
-        public ModeloController( 
+        public ModeloController(
                                IMapper mapper,
                                IBroadcaster broadcaster,
                                IModeloService service,
                                IModeloRepository repository)
            : base(broadcaster)
         {
-            
+
             _service = service;
             _mapper = mapper;
             _repository = repository;
@@ -79,13 +79,15 @@ namespace ApiApplication.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             if (!UploadArquivo(model.ImagemPerfilUpload, model.ImagemPerfilNome = Guid.NewGuid() + "_" + model.ImagemPerfilNome))
                 return CustomResponse(model);
 
             var entity = _mapper.Map<Modelo>(model);
             await _service.Adicionar(entity);
-
+            scope.Complete();
             return CustomResponse();
+
         }
 
         [HttpPut("{id:int}")]
@@ -94,12 +96,13 @@ namespace ApiApplication.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
             if (!string.IsNullOrEmpty(model.ImagemPerfilUpload) && !UploadArquivo(model.ImagemPerfilUpload, model.ImagemPerfilNome = Guid.NewGuid() + "_" + model.ImagemPerfilNome))
                 return CustomResponse(model);
 
             var entity = _mapper.Map<Modelo>(model);
             await _service.Editar(id, entity);
-
+            scope.Complete();
             return CustomResponse();
         }
 

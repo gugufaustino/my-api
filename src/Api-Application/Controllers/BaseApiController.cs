@@ -51,7 +51,7 @@ namespace ApiApplication.Controllers
                     data = default(object),
                     errors = _broadcaster.GetNotifications(TypeNotification.Error).Select(i => i.Message),
                     validations = _broadcaster.GetNotifications(TypeNotification.Validation).Select(i => i.Message),
-                    message = string.Empty,
+                    message = new string[]{ },
                     success = false,
                 });
             }
@@ -59,6 +59,8 @@ namespace ApiApplication.Controllers
             return Ok(new
             {
                 data = result,
+                errors = new string[] { },
+                validations = new string[] { },
                 message = _broadcaster.GetNotifications(TypeNotification.Success).Select(i => i.Message),
                 success = true,
             }); ;
